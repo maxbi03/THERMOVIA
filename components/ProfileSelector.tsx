@@ -8,7 +8,7 @@ const PROFILES = [
   {
     href: "/travail-exterieur",
     title: "Travail extérieur",
-    description: "BTP, agriculture, logistique : équipez vos équipes contre la canicule et le froid.",
+    description: "BTP, agriculture, logistique : travaillez dehors dans de bonnes conditions, été comme hiver.",
     icon: "M4 20h16M6 20V9l6-4 6 4v11M10 20v-5h4v5",
   },
   {
@@ -38,11 +38,12 @@ export default function ProfileSelector() {
         <Link
           key={profile.href}
           href={profile.href}
-          className="group rounded-xl border border-zinc-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md"
+          className="group rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-zinc-300 hover:shadow-lg"
         >
+          <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-zinc-100 transition-colors group-hover:bg-anthracite">
           <svg
             viewBox="0 0 24 24"
-            className="mb-3 h-8 w-8 text-zinc-400 transition-colors group-hover:text-anthracite"
+            className="h-6 w-6 text-zinc-500 transition-colors group-hover:text-white"
             fill="none"
             stroke="currentColor"
             strokeWidth="1.6"
@@ -52,6 +53,7 @@ export default function ProfileSelector() {
           >
             <path d={profile.icon} />
           </svg>
+          </div>
           <h3 className="font-semibold text-anthracite">{profile.title}</h3>
           <p className="mt-1 text-sm text-zinc-600">{profile.description}</p>
           <p className="mt-3 text-sm font-medium text-cool group-hover:underline">

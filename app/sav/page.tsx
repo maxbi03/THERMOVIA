@@ -5,7 +5,7 @@ import Hero from "@/components/Hero";
 export const metadata: Metadata = {
   title: "Service après-vente — garantie, réparation, pièces détachées",
   description:
-    "Le SAV Thermovia : garantie 2 ans, batteries et pièces de rechange, réparation en Suisse et un interlocuteur joignable en français. Notre différence face au dropshipping.",
+    "Le SAV Thermovia : garantie 2 ans, batteries et pièces de rechange, réparation en Suisse et un interlocuteur joignable en français, en Suisse romande.",
 };
 
 /** Page SAV : garantie, réparation, contact. Cœur du positionnement. */

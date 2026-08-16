@@ -5,7 +5,7 @@ import Hero from "@/components/Hero";
 export const metadata: Metadata = {
   title: "Qui sommes-nous — notre approche : stock local et vrai SAV",
   description:
-    "Thermovia n'est pas une boutique de dropshipping : stock partiel en Suisse, sélection exigeante auprès de fournisseurs européens et asiatiques, et un vrai service après-vente.",
+    "Thermovia : fournisseurs de confiance sélectionnés en Europe et en Asie, stock partiel en Suisse et un vrai service après-vente en Suisse romande.",
 };
 
 /** Page positionnement : stock + SAV, engagement qualité, sourcing. */
@@ -15,7 +15,7 @@ export default function AProposPage() {
       <Hero
         variant="neutral"
         eyebrow="Qui sommes-nous"
-        title="Une boutique suisse, pas une vitrine de dropshipping"
+        title="Une boutique suisse qui s'engage sur ses produits"
         subtitle="Notre conviction : les équipements thermiques à batterie méritent un vrai commerçant — qui stocke, qui teste, qui répare et qui répond."
       />
 
@@ -26,10 +26,10 @@ export default function AProposPage() {
           </h2>
           <div className="mt-4 space-y-4 text-zinc-700">
             <p>
-              Le marché des gilets ventilés et des vestes chauffantes est envahi de boutiques
-              éphémères qui expédient depuis l&apos;autre bout du monde des produits jamais
-              testés, sans garantie réelle ni pièces de rechange. Nous faisons le choix
-              inverse.
+              Nous construisons Thermovia autour d&apos;un principe simple : ne proposer que
+              des produits que nous connaissons, issus de fournisseurs sélectionnés et de
+              confiance, et les accompagner d&apos;un service après-vente basé en Suisse
+              romande — garantie réelle, pièces de rechange, interlocuteur joignable.
             </p>
             <ul className="list-disc space-y-2 pl-5">
               <li>

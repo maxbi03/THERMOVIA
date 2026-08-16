@@ -6,8 +6,8 @@
  */
 import productsJson from "@/data/products.json";
 
-/** Univers produit : rafraîchissement (chaleur/canicule) ou chauffage (froid). */
-export type Univers = "chaleur" | "froid";
+/** Univers produit : Été (rafraîchissement) ou Hiver (chauffage). */
+export type Univers = "ete" | "hiver";
 
 /** Profils clients ciblés. */
 export type Audience = "travail-exterieur" | "sport" | "particuliers" | "entreprises";
@@ -30,7 +30,7 @@ export interface Product {
 
 /** Catégories par univers, avec libellés d'affichage (utilisées par les filtres). */
 export const CATEGORIES: Record<Univers, { id: string; label: string }[]> = {
-  chaleur: [
+  ete: [
     { id: "gilet-ventile", label: "Gilets ventilés" },
     { id: "gilet-pcm", label: "Gilets PCM" },
     { id: "ventilateur-cou", label: "Ventilateurs de cou" },
@@ -38,7 +38,7 @@ export const CATEGORIES: Record<Univers, { id: string; label: string }[]> = {
     { id: "ventilateur-table", label: "Ventilateurs de table" },
     { id: "accessoire-rafraichissant", label: "Autres accessoires" },
   ],
-  froid: [
+  hiver: [
     { id: "veste-chauffante", label: "Vestes chauffantes" },
     { id: "gants-chauffants", label: "Gants chauffants" },
     { id: "gilet-chauffant", label: "Gilets chauffants" },
@@ -53,7 +53,7 @@ export function getAllProducts(): Product[] {
   return products;
 }
 
-/** Produits d'un univers (page /chaleur ou /froid). */
+/** Produits d'un univers (page /ete ou /hiver). */
 export function getProductsByUnivers(univers: Univers): Product[] {
   return products.filter((p) => p.univers === univers);
 }

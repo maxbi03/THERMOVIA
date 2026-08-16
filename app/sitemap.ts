@@ -5,8 +5,8 @@ import { SITE } from "@/lib/site";
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     "",
-    "/chaleur",
-    "/froid",
+    "/ete",
+    "/hiver",
     "/travail-exterieur",
     "/sport",
     "/particuliers",

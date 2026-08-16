@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Section catalogue filtrable (pages /chaleur et /froid) :
+ * Section catalogue filtrable (pages /ete et /hiver) :
  * filtre par catégorie + grille de ProductCard.
  */
 import { useState } from "react";

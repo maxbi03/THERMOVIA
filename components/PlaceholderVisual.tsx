@@ -74,9 +74,9 @@ interface PlaceholderVisualProps {
 }
 
 export default function PlaceholderVisual({ univers, category, alt }: PlaceholderVisualProps) {
-  // Univers "chaleur" (rafraîchissement) → dégradé bleu ; "froid" (chauffage) → dégradé orange.
+  // Univers "ete" (rafraîchissement) → dégradé bleu ; "hiver" (chauffage) → dégradé orange.
   const gradient =
-    univers === "chaleur"
+    univers === "ete"
       ? "from-sky-100 to-cyan-50 text-cool"
       : "from-orange-100 to-amber-50 text-heat";
 

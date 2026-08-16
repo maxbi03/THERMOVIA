@@ -17,7 +17,7 @@ export default function Footer() {
           </p>
           <p className="text-sm text-zinc-600">{SITE.tagline}</p>
           <p className="text-sm text-zinc-600">
-            Stock en Suisse et vrai service après-vente — pas du dropshipping.
+            Fournisseurs sélectionnés, stock en Suisse et service après-vente en Suisse romande.
           </p>
         </div>
 

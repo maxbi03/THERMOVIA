@@ -2,7 +2,7 @@
 
 Site vitrine V1 — boutique suisse (romande) d'équipements de régulation thermique corporelle : gilets ventilés et PCM contre la canicule, vestes et gants chauffants contre le froid.
 
-**Positionnement** : stock partiel en Suisse + vrai service après-vente — pas du dropshipping.
+**Positionnement** : fournisseurs sélectionnés, stock partiel en Suisse et service après-vente en Suisse romande.
 
 ## Démarrage
 
@@ -24,7 +24,7 @@ Le site tourne sur [http://localhost:3000](http://localhost:3000).
 ## Structure
 
 ```
-app/          Pages (App Router) : accueil, chaleur, froid, profils, entreprises, à-propos, SAV, contact, panier
+app/          Pages (App Router) : accueil, été, hiver, profils, entreprises, à-propos, SAV, contact, panier
 components/   Composants réutilisables : Header, Footer, Hero, ProductCard, CategoryFilter, ProfileSelector…
 data/         products.json — catalogue d'exemple
 lib/          site.ts (config), products.ts (accès typé au catalogue), cart.tsx (panier)

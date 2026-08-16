@@ -22,8 +22,8 @@ export const SITE = {
 
 /** Liens de la navigation principale (Header). */
 export const NAV_LINKS = [
-  { href: "/chaleur", label: "Chaleur" },
-  { href: "/froid", label: "Froid" },
+  { href: "/ete", label: "Été" },
+  { href: "/hiver", label: "Hiver" },
   { href: "/travail-exterieur", label: "Travail extérieur" },
   { href: "/sport", label: "Sport" },
   { href: "/particuliers", label: "Particuliers" },

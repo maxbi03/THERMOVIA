@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 /*
- * Thème Thermovia — dualité chaud/froid sur base neutre.
- * - "heat"  : accent orange/rouge → univers FROID (produits chauffants)
- * - "cool"  : accent bleu/cyan   → univers CHALEUR (produits rafraîchissants)
+ * Thème Thermovia — dualité été/hiver sur base neutre.
+ * - "cool"  : accent bleu/cyan   → univers ÉTÉ (produits rafraîchissants)
+ * - "heat"  : accent orange/rouge → univers HIVER (produits chauffants)
  * Base neutre blanc / gris anthracite pour un rendu suisse sobre et premium.
  */
 @theme {
@@ -25,4 +25,57 @@ html {
 
 body {
   @apply bg-white text-zinc-800 antialiased;
+}
+
+::selection {
+  @apply bg-anthracite text-white;
+}
+
+/* ---------------------------------------------------------------------------
+ * Animations légères (rendu premium)
+ * ------------------------------------------------------------------------ */
+
+/* Apparition au scroll — pilotée par le composant <Reveal> (IntersectionObserver) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Halos flottants du hero */
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(2rem, -1.5rem) scale(1.08);
+  }
+}
+.animate-float-slow {
+  animation: float-slow 9s ease-in-out infinite;
+}
+.animate-float-slower {
+  animation: float-slow 13s ease-in-out infinite reverse;
+}
+
+/* Accessibilité : désactive les animations si l'utilisateur le demande */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .animate-float-slow,
+  .animate-float-slower {
+    animation: none;
+  }
 }

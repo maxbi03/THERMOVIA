@@ -22,20 +22,22 @@ export default function ProductCard({ product }: { product: Product }) {
   };
 
   const accent =
-    product.univers === "chaleur"
+    product.univers === "ete"
       ? "bg-cool hover:bg-cool-dark"
       : "bg-heat hover:bg-heat-dark";
 
   return (
-    <article className="flex flex-col overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-shadow hover:shadow-md">
-      <div className="relative">
-        <PlaceholderVisual
-          univers={product.univers}
-          category={product.category}
-          alt={`Visuel temporaire du produit ${product.name}`}
-        />
+    <article className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+      <div className="relative overflow-hidden">
+        <div className="transition-transform duration-500 group-hover:scale-105">
+          <PlaceholderVisual
+            univers={product.univers}
+            category={product.category}
+            alt={`Visuel temporaire du produit ${product.name}`}
+          />
+        </div>
         {product.isExample && (
-          <span className="absolute left-3 top-3 rounded-full bg-anthracite/80 px-2.5 py-1 text-xs font-medium text-white">
+          <span className="absolute left-3 top-3 rounded-full bg-anthracite/75 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-sm">
             Exemple — catalogue final à venir
           </span>
         )}

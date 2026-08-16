@@ -20,7 +20,7 @@ export default function CategoryFilter({
   onSelect,
 }: CategoryFilterProps) {
   const activeClass =
-    univers === "chaleur" ? "bg-cool text-white border-cool" : "bg-heat text-white border-heat";
+    univers === "ete" ? "bg-cool text-white border-cool" : "bg-heat text-white border-heat";
   const inactiveClass =
     "bg-white text-zinc-700 border-zinc-300 hover:border-zinc-500";
 

@@ -27,11 +27,11 @@ export default function PanierPage() {
         <div className="mt-8 rounded-xl border border-dashed border-zinc-300 p-10 text-center">
           <p className="text-zinc-600">Votre panier est vide.</p>
           <div className="mt-4 flex justify-center gap-3">
-            <Link href="/chaleur" className="rounded-lg bg-cool px-5 py-2.5 text-sm font-semibold text-white hover:bg-cool-dark">
-              Univers Chaleur
+            <Link href="/ete" className="rounded-lg bg-cool px-5 py-2.5 text-sm font-semibold text-white hover:bg-cool-dark">
+              Univers Été
             </Link>
-            <Link href="/froid" className="rounded-lg bg-heat px-5 py-2.5 text-sm font-semibold text-white hover:bg-heat-dark">
-              Univers Froid
+            <Link href="/hiver" className="rounded-lg bg-heat px-5 py-2.5 text-sm font-semibold text-white hover:bg-heat-dark">
+              Univers Hiver
             </Link>
           </div>
         </div>
