@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+/*
+ * Thème Thermovia — dualité chaud/froid sur base neutre.
+ * - "heat"  : accent orange/rouge → univers FROID (produits chauffants)
+ * - "cool"  : accent bleu/cyan   → univers CHALEUR (produits rafraîchissants)
+ * Base neutre blanc / gris anthracite pour un rendu suisse sobre et premium.
+ */
+@theme {
+  --color-heat: #ea580c; /* orange-600 */
+  --color-heat-dark: #c2410c; /* orange-700 */
+  --color-heat-light: #ffedd5; /* orange-100 */
+  --color-cool: #0284c7; /* sky-600 */
+  --color-cool-dark: #0369a1; /* sky-700 */
+  --color-cool-light: #e0f2fe; /* sky-100 */
+  --color-anthracite: #27272a; /* zinc-800 */
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-zinc-800 antialiased;
+}
