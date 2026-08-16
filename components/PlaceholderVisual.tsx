@@ -1,92 +1,50 @@
 import type { Univers } from "@/lib/products";
 
 /**
- * Visuel produit temporaire (V1) : bloc coloré + icône SVG selon la catégorie.
+ * Visuel temporaire du design 2a : placeholder rayé (repeating-linear-gradient)
+ * avec légende monospace décrivant la photo attendue.
  * Sera remplacé par de vraies photos via le champ `imageUrl` des produits.
+ * Le ratio (4/5, 3/4…) est fixé par le conteneur parent.
  */
 
-/** Icône SVG simple par famille de produit. */
-function CategoryIcon({ category }: { category: string }) {
-  const common = {
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 1.5,
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-  };
-
-  // Ventilateurs (cou, portable, table) : hélice stylisée
-  if (category.startsWith("ventilateur")) {
-    return (
-      <svg viewBox="0 0 48 48" className="h-16 w-16" aria-hidden="true" {...common}>
-        <circle cx="24" cy="24" r="3" />
-        <path d="M24 21c0-6-2-10 3-13s10 2 7 8-7 5-10 5Z" />
-        <path d="M21 24c-6 0-10 2-13-3s2-10 8-7 5 7 5 10Z" />
-        <path d="M24 27c0 6 2 10-3 13s-10-2-7-8 7-5 10-5Z" />
-        <path d="M27 24c6 0 10-2 13 3s-2 10-8 7-5-7-5-10Z" />
-      </svg>
-    );
-  }
-
-  // Gants
-  if (category.startsWith("gants")) {
-    return (
-      <svg viewBox="0 0 48 48" className="h-16 w-16" aria-hidden="true" {...common}>
-        <path d="M16 42V22l-5-8c-1.5-2.5 2-5 4-3l5 6V9a2.5 2.5 0 0 1 5 0v8-11a2.5 2.5 0 0 1 5 0v11-8a2.5 2.5 0 0 1 5 0v10 -5a2.5 2.5 0 0 1 5 0v18c0 6-4 10-12 10s-12-4-12-10Z" />
-      </svg>
-    );
-  }
-
-  // Semelles / accessoires chauffants
-  if (category === "accessoire-chauffant") {
-    return (
-      <svg viewBox="0 0 48 48" className="h-16 w-16" aria-hidden="true" {...common}>
-        <path d="M14 6c8 0 12 6 12 14 0 6 8 6 8 14 0 5-4 8-10 8s-14-3-14-10V12c0-4 1-6 4-6Z" />
-        <path d="M12 32h20" />
-      </svg>
-    );
-  }
-
-  // Serviettes / accessoires rafraîchissants : goutte + vagues
-  if (category === "accessoire-rafraichissant") {
-    return (
-      <svg viewBox="0 0 48 48" className="h-16 w-16" aria-hidden="true" {...common}>
-        <path d="M24 6s11 12 11 20a11 11 0 0 1-22 0C13 18 24 6 24 6Z" />
-        <path d="M10 42c3-2 6-2 9 0s6 2 9 0 6-2 10 0" />
-      </svg>
-    );
-  }
-
-  // Gilets et vestes (défaut) : silhouette de gilet
-  return (
-    <svg viewBox="0 0 48 48" className="h-16 w-16" aria-hidden="true" {...common}>
-      <path d="M17 6c2 2 4 3 7 3s5-1 7-3l6 4v32a2 2 0 0 1-2 2h-7V26l-4-6-4 6v18h-7a2 2 0 0 1-2-2V10l6-4Z" />
-      <path d="M24 9v11" />
-    </svg>
-  );
-}
+const STRIPES: Record<string, string> = {
+  // Été : rayures teal très claires
+  ete: "repeating-linear-gradient(135deg, #E3E9EA 0 12px, #DBE2E3 12px 24px)",
+  // Hiver : rayures sable
+  hiver: "repeating-linear-gradient(135deg, #EDE3D8 0 12px, #E6DACD 12px 24px)",
+  // Seconde vie : rayures verdâtres
+  refurb: "repeating-linear-gradient(135deg, #DFE6DC 0 12px, #D7E0D4 12px 24px)",
+  // Neutre (atelier, visuels institutionnels)
+  neutral: "repeating-linear-gradient(135deg, #E8E6E1 0 14px, #E1DFD9 14px 28px)",
+};
 
 interface PlaceholderVisualProps {
-  univers: Univers;
-  category: string;
-  /** Texte alternatif descriptif (accessibilité). */
-  alt: string;
+  univers?: Univers;
+  /** Force la variante (ex. "refurb" pour les produits seconde vie). */
+  variant?: keyof typeof STRIPES;
+  /** Légende monospace décrivant la photo attendue (aussi utilisée en aria-label). */
+  caption: string;
+  className?: string;
 }
 
-export default function PlaceholderVisual({ univers, category, alt }: PlaceholderVisualProps) {
-  // Univers "ete" (rafraîchissement) → dégradé bleu ; "hiver" (chauffage) → dégradé orange.
-  const gradient =
-    univers === "ete"
-      ? "from-sky-100 to-cyan-50 text-cool"
-      : "from-orange-100 to-amber-50 text-heat";
+export default function PlaceholderVisual({
+  univers = "hiver",
+  variant,
+  caption,
+  className = "",
+}: PlaceholderVisualProps) {
+  const background = STRIPES[variant ?? univers];
 
   return (
     <div
       role="img"
-      aria-label={alt}
-      className={`flex aspect-[4/3] w-full items-center justify-center rounded-t-xl bg-gradient-to-br ${gradient}`}
+      aria-label={caption}
+      className={`flex h-full w-full items-end p-3.5 ${className}`}
+      style={{ background }}
     >
-      <CategoryIcon category={category} />
+      <span className="bg-white/80 px-2 py-1.5 font-mono text-[10px] font-medium leading-relaxed text-ink/55">
+        {caption}
+      </span>
     </div>
   );
 }

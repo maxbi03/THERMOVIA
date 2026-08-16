@@ -1,72 +1,59 @@
 /**
- * Pied de page : liens utiles + mentions légales suisses (placeholders
- * à compléter : raison sociale, adresse, numéro IDE).
+ * Pied de page design 2a : 4 colonnes (marque / BOUTIQUE / SERVICE / LÉGAL),
+ * bordure haute fine, valeurs légales depuis SITE.legal (placeholders).
  */
 import Link from "next/link";
-import { NAV_LINKS, SITE } from "@/lib/site";
+import { FOOTER_LINKS, SITE } from "@/lib/site";
 
 export default function Footer() {
   return (
-    <footer className="mt-16 border-t border-zinc-200 bg-zinc-50">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3">
+    <footer className="mt-16 px-4 sm:px-11">
+      <div className="grid gap-9 border-t border-ink/[.14] py-10 pb-11 md:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
         {/* Marque */}
-        <div className="space-y-3">
-          <p className="text-lg font-bold text-anthracite">
-            <span className="text-cool" aria-hidden="true">❄</span> {SITE.name}{" "}
-            <span className="text-heat" aria-hidden="true">🔥</span>
+        <div>
+          <p className="flex items-center gap-1.5 text-lg font-bold tracking-[-.02em]">
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-cool" />
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-heat" />
+            <span className="ml-1">THERMOVIA</span>
           </p>
-          <p className="text-sm text-zinc-600">{SITE.tagline}</p>
-          <p className="text-sm text-zinc-600">
-            Fournisseurs sélectionnés, stock en Suisse et service après-vente en Suisse romande.
+          <p className="mt-3 max-w-[270px] text-[13.5px] leading-relaxed text-ink/60">
+            Régulation thermique corporelle. Suisse romande, stock local, atelier de
+            réparation intégré.
           </p>
         </div>
 
-        {/* Navigation */}
-        <nav aria-label="Liens du pied de page">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-500">
-            Navigation
-          </p>
-          <ul className="grid grid-cols-2 gap-1.5 text-sm">
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className="text-zinc-600 hover:text-anthracite hover:underline">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-            <li>
-              <Link href="/a-propos" className="text-zinc-600 hover:text-anthracite hover:underline">
-                Qui sommes-nous
-              </Link>
-            </li>
-          </ul>
+        {/* Boutique */}
+        <nav aria-label="Liens boutique" className="flex flex-col gap-2 text-[13.5px] text-ink/60">
+          <p className="mb-1 text-xs font-semibold tracking-[.08em] text-ink">BOUTIQUE</p>
+          {FOOTER_LINKS.boutique.map((link) => (
+            <Link key={link.label} href={link.href} className="hover:text-ink hover:underline">
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
-        {/* Mentions légales — placeholders */}
-        <div className="text-sm text-zinc-600">
-          <p className="mb-3 font-semibold uppercase tracking-wide text-zinc-500">
-            Informations légales
-          </p>
-          <address className="space-y-1 not-italic">
-            <p>{SITE.legal.raisonSociale}</p>
-            <p>{SITE.legal.adresse}</p>
-            <p>IDE : {SITE.legal.ide}</p>
-            <p>
-              <a href={`mailto:${SITE.email}`} className="hover:underline">
-                {SITE.email}
-              </a>
-            </p>
-          </address>
-          <p className="mt-3 text-xs text-zinc-500">
-            Prix indicatifs en CHF, TVA suisse incluse. Mentions légales et CGV
-            définitives en cours de rédaction.
-          </p>
-        </div>
-      </div>
+        {/* Service */}
+        <nav aria-label="Liens service" className="flex flex-col gap-2 text-[13.5px] text-ink/60">
+          <p className="mb-1 text-xs font-semibold tracking-[.08em] text-ink">SERVICE</p>
+          {FOOTER_LINKS.service.map((link) => (
+            <Link key={link.label} href={link.href} className="hover:text-ink hover:underline">
+              {link.label}
+            </Link>
+          ))}
+        </nav>
 
-      <div className="border-t border-zinc-200 py-4 text-center text-xs text-zinc-500">
-        © {new Date().getFullYear()} {SITE.name} — Site V1, catalogue d&apos;exemple en cours de
-        constitution.
+        {/* Légal — placeholders à compléter avant mise en ligne */}
+        <div className="flex flex-col gap-2 text-[13.5px] text-ink/60">
+          <p className="mb-1 text-xs font-semibold tracking-[.08em] text-ink">LÉGAL</p>
+          <span>
+            {SITE.legal.raisonSociale} — IDE : {SITE.legal.ide}
+          </span>
+          <a href={`mailto:${SITE.email}`} className="hover:text-ink hover:underline">
+            {SITE.email}
+          </a>
+          <span>Prix en CHF, TVA suisse incluse</span>
+          <span>CGV — en rédaction</span>
+        </div>
       </div>
     </footer>
   );

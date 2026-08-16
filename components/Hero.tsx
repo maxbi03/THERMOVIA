@@ -17,18 +17,18 @@ interface HeroProps {
 
 const VARIANTS = {
   neutral: {
-    bg: "bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-700",
+    bg: "bg-gradient-to-br from-[#17181A] to-[#2B3036]",
     glowA: "bg-cool/25",
     glowB: "bg-heat/20",
   },
   cool: {
-    bg: "bg-gradient-to-br from-sky-800 via-sky-700 to-cyan-600",
-    glowA: "bg-cyan-300/25",
+    bg: "bg-gradient-to-br from-[#24525F] to-[#2F6A7A]",
+    glowA: "bg-[#7FA3AC]/25",
     glowB: "bg-white/10",
   },
   heat: {
-    bg: "bg-gradient-to-br from-orange-800 via-orange-700 to-red-600",
-    glowA: "bg-amber-300/25",
+    bg: "bg-gradient-to-br from-[#9A4E24] to-[#B85F2E]",
+    glowA: "bg-[#D9C7B4]/25",
     glowB: "bg-white/10",
   },
 } as const;
@@ -41,11 +41,11 @@ export default function Hero({ variant = "neutral", eyebrow, title, subtitle, ch
       {/* Halos décoratifs */}
       <div
         aria-hidden="true"
-        className={`animate-float-slow absolute -top-24 right-[10%] -z-10 h-72 w-72 rounded-full blur-3xl ${v.glowA}`}
+        className={`absolute -top-24 right-[10%] -z-10 h-72 w-72 rounded-full blur-3xl ${v.glowA}`}
       />
       <div
         aria-hidden="true"
-        className={`animate-float-slower absolute -bottom-32 left-[5%] -z-10 h-80 w-80 rounded-full blur-3xl ${v.glowB}`}
+        className={`absolute -bottom-32 left-[5%] -z-10 h-80 w-80 rounded-full blur-3xl ${v.glowB}`}
       />
 
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24">

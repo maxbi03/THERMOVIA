@@ -1,8 +1,9 @@
 "use client";
 
 /**
- * En-tête du site : logo, navigation principale, compteur panier.
- * Menu hamburger sur mobile (mobile-first).
+ * En-tête design 2a : bandeau service sombre + barre logo/nav/panier.
+ * Logo : deux pastilles (teal + terracotta) + THERMOVIA (plus d'emojis).
+ * Item de nav actif : souligné teal. Menu hamburger sur mobile.
  */
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -10,61 +11,71 @@ import { useState } from "react";
 import { useCart } from "@/lib/cart";
 import { NAV_LINKS, SITE } from "@/lib/site";
 
+/** Messages du bandeau service (annonce). */
+const SERVICE_BANNER = [
+  "LIVRAISON OFFERTE DÈS CHF 80.–",
+  "RETOURS 30 JOURS",
+  "ATELIER DE RÉPARATION À LAUSANNE",
+];
+
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
   const { count } = useCart();
 
-  const linkClass = (href: string) =>
-    `rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-      pathname === href
-        ? "bg-zinc-100 text-anthracite"
-        : "text-zinc-600 hover:bg-zinc-50 hover:text-anthracite"
-    }`;
+  const desktopLink = (href: string) =>
+    pathname === href
+      ? "text-ink border-b-2 border-cool pb-[3px]"
+      : "text-ink/65 hover:text-ink";
 
   return (
-    <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/95 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        {/* Logo texte : dualité froid/chaud */}
-        <Link href="/" className="flex items-center gap-1.5 text-xl font-bold tracking-tight">
-          <span className="text-cool" aria-hidden="true">❄</span>
-          <span className="text-anthracite">{SITE.name}</span>
-          <span className="text-heat" aria-hidden="true">🔥</span>
+    <header className="sticky top-0 z-40 bg-paper/95 backdrop-blur">
+      {/* Bandeau service */}
+      <div className="flex items-center justify-center gap-11 overflow-x-auto whitespace-nowrap bg-ink px-4 py-[11px] font-mono text-[11px] font-medium tracking-[.12em] text-[#F2F0EB]/75">
+        {SERVICE_BANNER.map((msg) => (
+          <span key={msg}>{msg}</span>
+        ))}
+      </div>
+
+      {/* Barre principale */}
+      <div className="flex items-center justify-between border-b border-ink/[.12] px-4 py-[18px] sm:px-11">
+        {/* Logo : pastilles + wordmark */}
+        <Link href="/" className="flex items-center gap-1.5" aria-label={`${SITE.name} — accueil`}>
+          <span aria-hidden="true" className="h-[9px] w-[9px] rounded-full bg-cool" />
+          <span aria-hidden="true" className="h-[9px] w-[9px] rounded-full bg-heat" />
+          <span className="ml-1 text-xl font-bold tracking-[-.02em]">THERMOVIA</span>
         </Link>
 
         {/* Navigation bureau */}
-        <nav aria-label="Navigation principale" className="hidden lg:flex lg:items-center lg:gap-1">
+        <nav aria-label="Navigation principale" className="hidden items-center gap-[26px] text-sm font-medium xl:flex">
           {NAV_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} className={linkClass(link.href)}>
+            <Link key={link.href} href={link.href} className={`transition-colors ${desktopLink(link.href)}`}>
               {link.label}
             </Link>
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
-          {/* Panier */}
+        {/* Droite : recherche / langue / panier */}
+        <div className="flex items-center gap-3.5 text-[13px] text-ink/55">
+          <span className="hidden sm:inline" title="Recherche — à venir">
+            Recherche
+          </span>
+          <span className="hidden sm:inline" title="Français (de/it à venir)">
+            FR
+          </span>
           <Link
             href="/panier"
-            className="relative rounded-md p-2 text-zinc-600 hover:bg-zinc-50 hover:text-anthracite"
+            className="rounded-full border border-ink/25 px-4 py-[9px] text-[13px] font-semibold text-ink transition-colors hover:bg-ink/5"
             aria-label={`Panier, ${count} article${count > 1 ? "s" : ""}`}
           >
-            <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l2.4 12.2A2 2 0 0 0 9.36 17h7.78a2 2 0 0 0 1.95-1.57L21 8H6" />
-              <circle cx="9.5" cy="20" r="1.3" />
-              <circle cx="17" cy="20" r="1.3" />
-            </svg>
-            {count > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-heat px-1 text-xs font-bold text-white">
-                {count}
-              </span>
-            )}
+            Panier · {count}
           </Link>
 
           {/* Bouton menu mobile */}
           <button
             type="button"
             onClick={() => setMenuOpen((o) => !o)}
-            className="rounded-md p-2 text-zinc-600 hover:bg-zinc-50 lg:hidden"
+            className="rounded-md p-2 text-ink/70 hover:bg-ink/5 xl:hidden"
             aria-expanded={menuOpen}
             aria-controls="menu-mobile"
             aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
@@ -85,7 +96,7 @@ export default function Header() {
         <nav
           id="menu-mobile"
           aria-label="Navigation mobile"
-          className="border-t border-zinc-200 bg-white px-4 pb-4 pt-2 lg:hidden"
+          className="border-b border-ink/[.12] bg-paper px-4 pb-4 pt-2 xl:hidden"
         >
           <ul className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => (
@@ -93,7 +104,9 @@ export default function Header() {
                 <Link
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className={`block ${linkClass(link.href)}`}
+                  className={`block rounded-md px-3 py-2 text-sm font-medium ${
+                    pathname === link.href ? "bg-ink/5 text-ink" : "text-ink/65 hover:bg-ink/5 hover:text-ink"
+                  }`}
                 >
                   {link.label}
                 </Link>

@@ -22,10 +22,24 @@ export interface Product {
   shortDescription: string;
   features: string[];
   audiences: Audience[];
-  /** URL de la vraie photo produit — null en V1 (placeholder SVG affiché). */
+  /** URL de la vraie photo produit — null en V1 (placeholder rayé affiché). */
   imageUrl: string | null;
   /** true tant que le produit est un exemple (catalogue final à venir). */
   isExample: boolean;
+  /** Specs courtes affichées sur la carte, séparées par « · ». */
+  specs: string;
+  /** Indice de réparabilité Thermovia (0–10). */
+  repairabilityScore: number;
+  /** Coloris disponibles (pastilles, valeurs hex). */
+  colors: string[];
+  /** Plage de tailles affichée (ex. « S–XXL », « 7–11 »). */
+  sizes: string;
+  /** Produit reconditionné en atelier (« Seconde vie »). */
+  isRefurbished?: boolean;
+  /** Prix barré (produits seconde vie). */
+  previousPrice?: number;
+  /** Badge « BEST » sur la carte. */
+  isBestSeller?: boolean;
 }
 
 /** Catégories par univers, avec libellés d'affichage (utilisées par les filtres). */
@@ -70,6 +84,11 @@ export function getCategoryLabel(categoryId: string): string {
     if (found) return found.label;
   }
   return categoryId;
+}
+
+/** Produits reconditionnés en atelier (page /seconde-vie et filtre dédié). */
+export function getRefurbishedProducts(): Product[] {
+  return products.filter((p) => p.isRefurbished);
 }
 
 /** Retrouve un produit par id (utilisé par le panier). */

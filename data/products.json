@@ -10,7 +10,11 @@
     "features": ["2 ventilateurs 3 vitesses", "Batterie 10 000 mAh incluse", "Tissu déperlant et anti-UV", "Lavable (ventilateurs amovibles)"],
     "audiences": ["travail-exterieur", "entreprises"],
     "imageUrl": null,
-    "isExample": true
+    "isExample": true,
+    "specs": "2 ventilateurs · 8 h · anti-UV",
+    "repairabilityScore": 8.6,
+    "colors": ["#2B2E33", "#5B6770"],
+    "sizes": "S–XXL"
   },
   {
     "id": "ch-002",
@@ -23,7 +27,11 @@
     "features": ["2 ventilateurs silencieux", "Coupe ajustée unisexe", "Batterie non incluse (USB-C)"],
     "audiences": ["particuliers", "sport"],
     "imageUrl": null,
-    "isExample": true
+    "isExample": true,
+    "specs": "2 ventilateurs · silencieux · USB-C",
+    "repairabilityScore": 7.9,
+    "colors": ["#DDE3E6", "#2B2E33"],
+    "sizes": "XS–XL"
   },
   {
     "id": "ch-003",
@@ -36,7 +44,12 @@
     "features": ["Packs PCM 21 °C réutilisables", "Régénération en 20 min dans l'eau froide", "Sans batterie, silencieux", "Compatible port sous veste de sécurité"],
     "audiences": ["travail-exterieur", "sport", "entreprises"],
     "imageUrl": null,
-    "isExample": true
+    "isExample": true,
+    "specs": "21 °C constant · 2–3 h · sans batterie",
+    "repairabilityScore": 9.0,
+    "colors": ["#E8E4DC", "#2B2E33"],
+    "sizes": "S–XXL",
+    "isBestSeller": true
   },
   {
     "id": "ch-004",
@@ -49,7 +62,11 @@
     "features": ["Coupe près du corps", "Packs PCM fins et flexibles", "Poids total < 1 kg"],
     "audiences": ["sport", "particuliers"],
     "imageUrl": null,
-    "isExample": true
+    "isExample": true,
+    "specs": "coupe ajustée · packs fins · < 1 kg",
+    "repairabilityScore": 8.8,
+    "colors": ["#2B2E33"],
+    "sizes": "XS–XL"
   },
   {
     "id": "ch-005",
@@ -62,7 +79,11 @@
     "features": ["Sans pales (cheveux protégés)", "Autonomie 4 à 16 h", "Charge USB-C", "3 vitesses, mode silencieux"],
     "audiences": ["particuliers", "sport", "travail-exterieur"],
     "imageUrl": null,
-    "isExample": true
+    "isExample": true,
+    "specs": "sans pales · 4–16 h · USB-C",
+    "repairabilityScore": 8.2,
+    "colors": ["#F2F0EB", "#2B2E33"],
+    "sizes": "Taille unique"
   },
   {
     "id": "ch-006",
@@ -75,7 +96,11 @@
     "features": ["Pliable, format poche", "Fonction batterie de secours", "Socle intégré pour poser"],
     "audiences": ["particuliers"],
     "imageUrl": null,
-    "isExample": true
+    "isExample": true,
+    "specs": "pliable · powerbank · socle intégré",
+    "repairabilityScore": 7.4,
+    "colors": ["#2B2E33", "#7FA3AC"],
+    "sizes": "Taille unique"
   },
   {
     "id": "ch-007",
@@ -88,7 +113,11 @@
     "features": ["Moteur silencieux < 35 dB", "Oscillation 60°", "4 vitesses + minuterie", "Alimentation USB ou secteur"],
     "audiences": ["particuliers", "entreprises"],
     "imageUrl": null,
-    "isExample": true
+    "isExample": true,
+    "specs": "< 35 dB · oscillation 60° · minuterie",
+    "repairabilityScore": 7.7,
+    "colors": ["#F2F0EB"],
+    "sizes": "Taille unique"
   },
   {
     "id": "ch-008",
@@ -101,7 +130,30 @@
     "features": ["Effet rafraîchissant immédiat", "Réutilisable, lavable en machine", "Étui de transport inclus"],
     "audiences": ["sport", "particuliers", "travail-exterieur"],
     "imageUrl": null,
-    "isExample": true
+    "isExample": true,
+    "specs": "évaporatif · lavable machine · lot de 2",
+    "repairabilityScore": 8.1,
+    "colors": ["#7FA3AC", "#D9C7B4"],
+    "sizes": "30 × 100 cm"
+  },
+  {
+    "id": "ch-009",
+    "slug": "gilet-ventile-pro-v1-reconditionne",
+    "name": "Gilet ventilé Pro V1 reconditionné",
+    "univers": "ete",
+    "category": "gilet-ventile",
+    "price": 119,
+    "shortDescription": "Gilet ventilé Pro V1 repris, révisé et testé en atelier : ventilateurs et batterie contrôlés, garanti 1 an.",
+    "features": ["Révisé et testé en atelier", "Batterie contrôlée ou remplacée", "Garantie 1 an"],
+    "audiences": ["travail-exterieur", "particuliers"],
+    "imageUrl": null,
+    "isExample": true,
+    "specs": "Révisé en atelier · garanti 1 an · 2 pièces",
+    "repairabilityScore": 8.6,
+    "colors": ["#2B2E33"],
+    "sizes": "L, XL",
+    "isRefurbished": true,
+    "previousPrice": 189
   },
   {
     "id": "fr-001",
@@ -114,7 +166,12 @@
     "features": ["5 zones de chauffe, 3 niveaux", "Autonomie jusqu'à 10 h", "Membrane coupe-vent et déperlante", "Batterie 12 V incluse"],
     "audiences": ["travail-exterieur", "entreprises"],
     "imageUrl": null,
-    "isExample": true
+    "isExample": true,
+    "specs": "5 zones · jusqu'à 10 h · coupe-vent",
+    "repairabilityScore": 8.4,
+    "colors": ["#2B2E33", "#4A4032", "#3A4A42"],
+    "sizes": "S–XXL",
+    "isBestSeller": true
   },
   {
     "id": "fr-002",
@@ -127,7 +184,11 @@
     "features": ["3 zones de chauffe", "Design sobre, coupe ajustée", "Charge du smartphone via la batterie"],
     "audiences": ["particuliers"],
     "imageUrl": null,
-    "isExample": true
+    "isExample": true,
+    "specs": "3 zones · coupe urbaine · powerbank",
+    "repairabilityScore": 7.8,
+    "colors": ["#2B2E33", "#5A4A4A"],
+    "sizes": "XS–XL"
   },
   {
     "id": "fr-003",
@@ -140,7 +201,11 @@
     "features": ["Chauffe jusqu'au bout des doigts", "Paume renforcée antidérapante", "Compatibles écrans tactiles", "2 batteries incluses"],
     "audiences": ["travail-exterieur", "entreprises"],
     "imageUrl": null,
-    "isExample": true
+    "isExample": true,
+    "specs": "Doigts chauffés · paume antidérapante",
+    "repairabilityScore": 7.8,
+    "colors": ["#2B2E33"],
+    "sizes": "7–11"
   },
   {
     "id": "fr-004",
@@ -153,7 +218,11 @@
     "features": ["Membrane coupe-vent respirante", "3 niveaux de chauffe", "Autonomie 2,5 à 6 h"],
     "audiences": ["sport", "particuliers"],
     "imageUrl": null,
-    "isExample": true
+    "isExample": true,
+    "specs": "coupe-vent · 3 niveaux · 2,5–6 h",
+    "repairabilityScore": 7.5,
+    "colors": ["#2B2E33"],
+    "sizes": "7–11"
   },
   {
     "id": "fr-005",
@@ -166,7 +235,11 @@
     "features": ["4 zones de chauffe", "Ultra-léger (420 g)", "Lavable en machine (batterie retirée)", "USB-C, batterie universelle"],
     "audiences": ["travail-exterieur", "sport", "particuliers", "entreprises"],
     "imageUrl": null,
-    "isExample": true
+    "isExample": true,
+    "specs": "420 g · 4 zones · lavable machine",
+    "repairabilityScore": 9.1,
+    "colors": ["#2B2E33", "#5A4A4A"],
+    "sizes": "XS–XXL"
   },
   {
     "id": "fr-006",
@@ -179,7 +252,11 @@
     "features": ["Autonomie jusqu'à 12 h", "Isolation matelassée", "Col montant chauffé"],
     "audiences": ["particuliers", "sport"],
     "imageUrl": null,
-    "isExample": true
+    "isExample": true,
+    "specs": "jusqu'à 12 h · matelassé · col chauffé",
+    "repairabilityScore": 8.3,
+    "colors": ["#3A4A42", "#2B2E33"],
+    "sizes": "S–XXL"
   },
   {
     "id": "fr-007",
@@ -192,6 +269,29 @@
     "features": ["Télécommande sans fil", "Découpables (36–46)", "Autonomie 5 à 8 h", "Compatibles chaussures de sécurité"],
     "audiences": ["travail-exterieur", "particuliers", "sport"],
     "imageUrl": null,
-    "isExample": true
+    "isExample": true,
+    "specs": "télécommande · 5–8 h · découpables",
+    "repairabilityScore": 8.0,
+    "colors": ["#2B2E33"],
+    "sizes": "36–46"
+  },
+  {
+    "id": "fr-008",
+    "slug": "gilet-chauffant-flex-reconditionne",
+    "name": "Gilet Flex reconditionné",
+    "univers": "hiver",
+    "category": "gilet-chauffant",
+    "price": 99,
+    "shortDescription": "Gilet chauffant Flex repris, révisé et testé en atelier : zones de chauffe et batterie contrôlées, garanti 1 an.",
+    "features": ["Révisé et testé en atelier", "Batterie contrôlée ou remplacée", "Garantie 1 an"],
+    "audiences": ["travail-exterieur", "particuliers"],
+    "imageUrl": null,
+    "isExample": true,
+    "specs": "Révisé en atelier · garanti 1 an · 3 pièces",
+    "repairabilityScore": 9.1,
+    "colors": ["#2B2E33"],
+    "sizes": "M, L",
+    "isRefurbished": true,
+    "previousPrice": 149
   }
 ]

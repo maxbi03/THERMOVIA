@@ -1,32 +1,23 @@
 "use client";
 
 /**
- * Filtre par catégorie sous forme de "pilules".
- * Composant contrôlé : l'état vit dans le parent (CatalogueSection).
+ * Filtre par catégorie — pilules du design 2a.
+ * Actif : fond encre / texte crème ; inactif : contour fin.
+ * Composant contrôlé : l'état vit dans le parent.
  */
-import type { Univers } from "@/lib/products";
 
 interface CategoryFilterProps {
-  univers: Univers;
   categories: { id: string; label: string }[];
   selected: string | null; // null = toutes les catégories
   onSelect: (categoryId: string | null) => void;
 }
 
-export default function CategoryFilter({
-  univers,
-  categories,
-  selected,
-  onSelect,
-}: CategoryFilterProps) {
-  const activeClass =
-    univers === "ete" ? "bg-cool text-white border-cool" : "bg-heat text-white border-heat";
-  const inactiveClass =
-    "bg-white text-zinc-700 border-zinc-300 hover:border-zinc-500";
-
+export default function CategoryFilter({ categories, selected, onSelect }: CategoryFilterProps) {
   const pill = (isActive: boolean) =>
-    `rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
-      isActive ? activeClass : inactiveClass
+    `rounded-full px-[15px] py-2 text-[12.5px] font-medium whitespace-nowrap transition-colors ${
+      isActive
+        ? "bg-ink text-cream"
+        : "border border-ink/[.18] text-ink/60 hover:bg-ink/5 hover:text-ink"
     }`;
 
   return (
@@ -37,7 +28,7 @@ export default function CategoryFilter({
         aria-pressed={selected === null}
         className={pill(selected === null)}
       >
-        Tous
+        Tout
       </button>
       {categories.map((cat) => (
         <button

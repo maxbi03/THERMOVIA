@@ -20,17 +20,37 @@ export const SITE = {
   },
 } as const;
 
-/** Liens de la navigation principale (Header). */
+/**
+ * Liens de la navigation principale (Header) — vocabulaire « verbe d'usage »
+ * du design 2a : Chauffer (hiver) / Rafraîchir (été).
+ */
 export const NAV_LINKS = [
-  { href: "/ete", label: "Été" },
-  { href: "/hiver", label: "Hiver" },
-  { href: "/travail-exterieur", label: "Travail extérieur" },
-  { href: "/sport", label: "Sport" },
-  { href: "/particuliers", label: "Particuliers" },
+  { href: "/hiver", label: "Chauffer" },
+  { href: "/ete", label: "Rafraîchir" },
+  { href: "/textile-couches", label: "Textile & couches" },
+  { href: "/accessoires", label: "Accessoires" },
+  { href: "/seconde-vie", label: "Seconde vie" },
+  { href: "/travail-exterieur", label: "Métiers" },
   { href: "/entreprises", label: "Entreprises" },
-  { href: "/sav", label: "SAV" },
-  { href: "/contact", label: "Contact" },
 ] as const;
+
+/** Colonnes de liens du pied de page (design 2a). */
+export const FOOTER_LINKS = {
+  boutique: [
+    { href: "/hiver", label: "Chauffer" },
+    { href: "/ete", label: "Rafraîchir" },
+    { href: "/textile-couches", label: "Textile & couches" },
+    { href: "/seconde-vie", label: "Seconde vie" },
+    { href: "/entreprises", label: "Entreprises" },
+  ],
+  service: [
+    { href: "/sav", label: "Atelier & SAV" },
+    { href: "/sav", label: "Pièces détachées" },
+    { href: "/contact", label: "Guide des tailles" },
+    { href: "/sav", label: "Livraison & retours" },
+    { href: "/contact", label: "Contact" },
+  ],
+} as const;
 
 /** Formate un prix en CHF (fr-CH). */
 export function formatPrice(price: number): string {
