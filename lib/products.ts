@@ -28,7 +28,11 @@ export interface Product {
   isExample: boolean;
   /** Specs courtes affichées sur la carte, séparées par « · ». */
   specs: string;
-  /** Indice de réparabilité Thermovia (0–10). */
+  /**
+   * Note de réparabilité (0–10) — critère INTERNE de sélection fournisseur,
+   * plus affiché publiquement : annoncer un indice supposerait une méthode
+   * de notation testée que nous n'avons pas encore.
+   */
   repairabilityScore: number;
   /** Coloris disponibles (pastilles, valeurs hex). */
   colors: string[];
@@ -56,8 +60,8 @@ export const CATEGORIES: Record<Univers, { id: string; label: string }[]> = {
   hiver: [
     { id: "vestes", label: "Vestes" },
     { id: "gilets", label: "Gilets" },
-    { id: "extremites", label: "Extrémités" },
-    { id: "accessoires", label: "Accessoires" },
+    { id: "mains-pieds", label: "Mains & pieds" },
+    { id: "accessoires", label: "Batteries & accessoires" },
   ],
 };
 

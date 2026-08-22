@@ -2,7 +2,7 @@
 
 /**
  * Section catalogue filtrable (page /hiver, ex-/ete) :
- * filtre par catégorie (+ pseudo-catégorie « Seconde vie ») + grille de cartes.
+ * filtre par catégorie + grille de cartes.
  * Le paramètre d'URL ?cat= (mega-menu Hiver du Header) pré-applique un filtre ;
  * lu via useSearchParams → le parent doit envelopper dans <Suspense>.
  * Les profils clients (pro / sport / particuliers) sont un filtre secondaire
@@ -29,7 +29,7 @@ export default function CatalogueSection({
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedAudience, setSelectedAudience] = useState<Audience | null>(null);
 
-  const categories = [...CATEGORIES[univers], { id: "seconde-vie", label: "Seconde vie" }];
+  const categories = CATEGORIES[univers];
 
   // Pré-applique la catégorie passée en query string (ex. /hiver?cat=vestes
   // depuis le mega-menu). Réactif aux navigations internes successives.
@@ -42,12 +42,12 @@ export default function CatalogueSection({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [catParam]);
 
-  const byCategory =
-    selectedCategory === "seconde-vie"
-      ? products.filter((p) => p.isRefurbished)
-      : selectedCategory
-        ? products.filter((p) => p.category === selectedCategory)
-        : products;
+  // Produits reconditionnés masqués tant que la reprise n'existe pas
+  // (même règle que sur la page d'accueil).
+  const catalogue = products.filter((p) => !p.isRefurbished);
+  const byCategory = selectedCategory
+    ? catalogue.filter((p) => p.category === selectedCategory)
+    : catalogue;
 
   const visible = selectedAudience
     ? byCategory.filter((p) => p.audiences.includes(selectedAudience))

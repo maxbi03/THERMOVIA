@@ -40,8 +40,8 @@ export default function EntreprisesPage() {
               <p className="mt-3 text-zinc-600">
                 BTP, logistique, voirie : une seule veste combine haute visibilité et chauffage
                 sur batterie, pour des équipes qui restent efficaces tout l&apos;hiver.
-                Personnalisable avec votre logo, livrée avec batteries, suivie par notre
-                atelier pendant toute sa durée de vie.
+                Personnalisable avec votre logo, livrée avec batteries, et dont les pièces
+                d&apos;usure restent commandables à l&apos;unité.
               </p>
               {/* À-VALIDER: délai indicatif 4-6 semaines à confirmer une fois le fabricant retenu et les délais réels de production + import connus. */}
               <p className="mt-4 text-sm font-medium text-anthracite">

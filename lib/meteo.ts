@@ -1,10 +1,11 @@
 /**
  * Température en direct — données ouvertes MétéoSuisse (OGD).
  *
- * Source : réseau de mesure automatique SMN, station PUY (Pully, VD, 456 m),
- * station officielle de l'agglomération lausannoise. Le fichier « _now »
+ * Source : réseau de mesure automatique SMN, station VEV (Vevey / Corseaux,
+ * VD, 405 m), la station la plus proche du lieu de stock. Le fichier « _now »
  * contient les valeurs toutes les 10 minutes du jour courant ; on lit la
- * dernière ligne renseignée.
+ * dernière ligne renseignée — cette station publie le vent avant la
+ * température, la ligne la plus récente est donc souvent incomplète.
  *
  * Licence CC-BY : la mention « MétéoSuisse » doit rester visible à l'écran.
  * Le service autorise l'appel direct depuis le navigateur
@@ -13,11 +14,11 @@
  */
 
 export const METEO_STATION = {
-  abbr: "PUY",
-  name: "Pully",
-  /** Libellé affiché : la station couvre l'agglomération lausannoise. */
-  displayLocation: "Lausanne",
-  csvUrl: "https://data.geo.admin.ch/ch.meteoschweiz.ogd-smn/puy/ogd-smn_puy_t_now.csv",
+  abbr: "VEV",
+  name: "Vevey / Corseaux",
+  /** Libellé affiché : la région couverte, pas le nom exact de la station. */
+  displayLocation: "Vevey",
+  csvUrl: "https://data.geo.admin.ch/ch.meteoschweiz.ogd-smn/vev/ogd-smn_vev_t_now.csv",
 } as const;
 
 /** Colonne « température de l'air à 2 m, valeur instantanée » du jeu SMN. */

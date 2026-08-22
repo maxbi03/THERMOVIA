@@ -58,8 +58,8 @@ export default function AProposPage() {
             <p>
               Nous sommes en cours de sélection de nos fournisseurs, en Europe et en Asie.
               Nos critères : qualité de fabrication constante, sécurité des batteries
-              (certifications), disponibilité des pièces détachées et conditions de
-              production responsables. Nous préférons retarder l&apos;ouverture du catalogue
+              (certifications), batterie remplaçable sans outil spécifique, disponibilité
+              des pièces détachées dans la durée et conditions de production responsables. Nous préférons retarder l&apos;ouverture du catalogue
               final plutôt que de vendre des produits que nous n&apos;assumerions pas.
             </p>
             <p>

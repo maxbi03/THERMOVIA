@@ -3,18 +3,19 @@ import { SITE } from "@/lib/site";
 
 /** Sitemap simple : toutes les pages publiques du site. */
 export default function sitemap(): MetadataRoute.Sitemap {
+  // Uniquement les pages assumées : /textile-couches, /accessoires et
+  // /seconde-vie existent encore en fichier mais ne sont plus liées ni
+  // référencées tant que leur contenu n'est pas d'actualité.
   const routes = [
     "",
-    "/ete",
     "/hiver",
-    "/textile-couches",
-    "/accessoires",
-    "/seconde-vie",
-    "/travail-exterieur",
+    "/ete",
     "/sport",
+    "/travail-exterieur",
     "/entreprises",
-    "/a-propos",
+    "/guide-tailles",
     "/sav",
+    "/a-propos",
     "/contact",
   ];
 

@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     template: `%s | ${SITE.name}`,
   },
   description:
-    "Gilets ventilés, gilets PCM, vestes et gants chauffants : équipements de régulation thermique corporelle avec stock en Suisse et atelier de réparation à Lausanne.",
+    "Vestes, gilets et gants chauffants : équipements de régulation thermique corporelle, stock et expédition depuis la Suisse romande, pièces détachées disponibles à l'unité.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

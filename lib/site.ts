@@ -45,24 +45,31 @@ export const NAV_LINKS = [
 export const HIVER_MEGA_MENU = [
   { cat: "vestes", label: "Vestes", sublabel: "pro & sport" },
   { cat: "gilets", label: "Gilets", sublabel: "fins et légers" },
-  { cat: "extremites", label: "Extrémités", sublabel: "gants & pieds" },
-  { cat: "accessoires", label: "Accessoires", sublabel: "petits objets" },
+  { cat: "mains-pieds", label: "Mains & pieds", sublabel: "gants & semelles" },
+  // Les pièces à l'unité vivent ici plutôt que dans une entrée de menu
+  // dédiée : c'est la structure retenue par les boutiques spécialisées
+  // (Therm-ic, Lenz, G-Heat rangent toutes batteries et pièces sous
+  // l'univers produit, jamais au premier niveau du menu).
+  { cat: "accessoires", label: "Batteries & accessoires", sublabel: "pièces à l'unité" },
 ] as const;
 
-/** Colonnes de liens du pied de page (design 2a). */
+/**
+ * Colonnes de liens du pied de page.
+ * Ne référencer ici que des pages qui existent réellement et dont le contenu
+ * est assumé : pas de rubrique annoncée avant d'être ouverte.
+ */
 export const FOOTER_LINKS = {
   boutique: [
     { href: "/hiver", label: "Hiver" },
-    { href: "/ete", label: "Été" },
-    { href: "/textile-couches", label: "Textile & couches" },
-    { href: "/seconde-vie", label: "Seconde vie" },
+    { href: "/ete", label: "Été — bientôt" },
+    { href: "/sport", label: "Sport" },
+    { href: "/travail-exterieur", label: "Travail extérieur" },
     { href: "/entreprises", label: "Entreprises" },
   ],
   service: [
-    { href: "/sav", label: "Atelier & SAV" },
-    { href: "/sav", label: "Pièces détachées" },
-    { href: "/contact", label: "Guide des tailles" },
-    { href: "/sav", label: "Livraison & retours" },
+    { href: "/guide-tailles", label: "Guide des tailles" },
+    { href: "/sav", label: "Garantie & SAV" },
+    { href: "/a-propos", label: "Qui sommes-nous" },
     { href: "/contact", label: "Contact" },
   ],
 } as const;

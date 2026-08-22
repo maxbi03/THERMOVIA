@@ -40,7 +40,7 @@ export default function EteNotifyForm() {
         type="email"
         required
         placeholder="votre@email.ch"
-        className="min-w-[260px] rounded-full border border-ink/25 bg-transparent px-[26px] py-3.5 text-sm placeholder:text-ink/45 focus:border-cool focus:outline-none"
+        className="w-full rounded-full border border-ink/25 bg-transparent px-[26px] py-3.5 text-sm placeholder:text-ink/45 focus:border-cool focus:outline-none sm:w-[260px]"
       />
       <button
         type="submit"

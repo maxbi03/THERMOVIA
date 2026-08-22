@@ -2,7 +2,7 @@
 
 /**
  * Bandeau météo de l'accueil : température réelle mesurée par MétéoSuisse
- * (station de Pully), rafraîchie automatiquement.
+ * (station de Vevey / Corseaux), rafraîchie automatiquement.
  * Tant qu'aucune mesure valide n'est disponible (chargement, source hors
  * ligne, données périmées), le bandeau ne s'affiche pas : jamais de
  * température inventée ni de mention de source sans valeur derrière.
@@ -51,7 +51,7 @@ export default function MeteoLive() {
       </span>
       <span aria-hidden="true" className="h-3 w-px bg-ink/[.14]" />
       <span>
-        MESURE MÉTÉOSUISSE · {METEO_STATION.name.toUpperCase()} ·{" "}
+        MESURE MÉTÉOSUISSE ·{" "}
         <time dateTime={measure.measuredAt.toISOString()}>
           {formatMeasuredAt(measure.measuredAt)}
         </time>

@@ -1,9 +1,9 @@
 "use client";
 
 /**
- * Carte produit — design 2a : visuel 4:5 rayé, badges réparabilité / BEST /
- * SECONDE VIE, specs courtes, pastilles coloris + tailles, prix et bouton
- * « Ajouter » (panier local, pas de paiement en V1).
+ * Carte produit — design 2a : visuel 4:5 rayé, badges BEST / SECONDE VIE,
+ * specs courtes, pastilles coloris + tailles, prix et bouton « Ajouter »
+ * (panier local, pas de paiement en V1).
  */
 import { useState } from "react";
 import PlaceholderVisual from "@/components/PlaceholderVisual";
@@ -39,13 +39,13 @@ export default function ProductCard({ product }: { product: Product }) {
             caption={`photo produit — ${product.name}`}
           />
         </div>
-        {refurb ? (
+        {/* L'indice de réparabilité n'est plus affiché : il supposait une
+            méthode de notation testée que nous n'avons pas encore. Le score
+            reste dans les données comme critère interne de sélection
+            fournisseur (voir /a-propos). */}
+        {refurb && (
           <span className="absolute left-3.5 top-3.5 rounded-[3px] bg-eco px-2 py-1.5 font-mono text-[10px] font-semibold tracking-[.08em] text-[#EAF0EA]">
             SECONDE VIE
-          </span>
-        ) : (
-          <span className="absolute left-3.5 top-3.5 rounded-[3px] bg-ink/80 px-2 py-1.5 font-mono text-[10px] font-semibold tracking-[.08em] text-cream">
-            RÉPARABILITÉ {product.repairabilityScore.toFixed(1).replace(".", ",")}
           </span>
         )}
         {product.isBestSeller && (

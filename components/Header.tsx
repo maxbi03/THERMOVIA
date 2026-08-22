@@ -14,10 +14,11 @@ import { useCart } from "@/lib/cart";
 import { HIVER_MEGA_MENU, NAV_LINKS, SITE } from "@/lib/site";
 
 /** Messages du bandeau service (annonce). */
+// À-VALIDER: le seuil de livraison offerte (CHF 80.–) reste à confirmer une fois les tarifs postaux et les marges connus.
 const SERVICE_BANNER = [
   "LIVRAISON OFFERTE DÈS CHF 80.–",
-  "RETOURS 30 JOURS",
-  "ATELIER DE RÉPARATION À LAUSANNE",
+  "ÉCHANGE SOUS 30 JOURS",
+  "EXPÉDIÉ DEPUIS LA RÉGION DE VEVEY",
 ];
 
 export default function Header() {

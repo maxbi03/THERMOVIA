@@ -2,10 +2,13 @@
 
 /**
  * Page d'accueil — design 2a, orientée lancement HIVER grand public.
+ *
+ * C'EST ICI que se modifie le contenu de la page d'accueil : app/page.tsx ne
+ * porte que le titre et la description SEO, tout le reste vit dans ce fichier.
+ *
  * Sections : hero hiver avec échelle de température, bande d'arguments,
- * grille produits hiver filtrable, indice de réparabilité, atelier
- * (reprise / réparation), teaser été, accès rapides (Sport / Travail
- * extérieur / Entreprises), capture e-mail.
+ * grille produits hiver filtrable, teaser été, accès rapides (Sport /
+ * Travail extérieur / Entreprises), capture e-mail.
  * L'ancienne bascule « J'ai froid dehors / J'ai trop chaud » a été retirée :
  * le lancement se fait hiver d'abord, l'été vit en teaser sur /ete.
  */
@@ -19,12 +22,26 @@ import Reveal from "@/components/Reveal";
 import { CATEGORIES, getProductsByUnivers } from "@/lib/products";
 import { SITE } from "@/lib/site";
 
+/**
+ * Échelle de température de l'univers affiché.
+ * Elle ne couvre que l'hiver tant que la gamme été n'est pas ouverte : une
+ * seconde entrée « ete » viendra s'ajouter ici au printemps, la structure est
+ * prête pour basculer selon la saison affichée.
+ */
+// À-VALIDER: bornes de température et association produit/température à revoir après les tests terrain des échantillons.
+const ECHELLE_HIVER = {
+  titre: "CE QUE COUVRE LA GAMME HIVER",
+  gradient: "linear-gradient(to right, #24525F, #2F6A7A 38%, #7FA3AC 72%, #D9C7B4)",
+  temperatures: ["−15 °C", "−5 °C", "+3 °C", "+12 °C"],
+  usages: ["Veste chauffante + gants", "Gilet chauffant + gants", "Gilet seul, sous la veste"],
+} as const;
+
 /** Accès rapides sous le teaser été — ordre : Sport, Travail extérieur, Entreprises. */
 const ACCES_RAPIDES = [
   {
     href: "/sport",
     eyebrow: "Sport",
-    title: "Extrémités au chaud, sorties toute l'année",
+    title: "Mains et pieds au chaud, toute la saison",
     text: "Gants fins pour le vélo, gilets légers pour l'avant-course : la chaleur qui suit l'effort.",
   },
   {
@@ -37,7 +54,7 @@ const ACCES_RAPIDES = [
     href: "/entreprises",
     eyebrow: "Entreprises",
     title: "Équiper une équipe, du devis à la maintenance",
-    text: "Commandes en volume, personnalisation logo et parc suivi par l'atelier.",
+    text: "Commandes en volume, personnalisation logo et devis chiffré sous 2 jours.",
   },
 ] as const;
 
@@ -45,14 +62,14 @@ export default function AccueilClient() {
   const [categorie, setCategorie] = useState<string | null>(null);
   const [emailSent, setEmailSent] = useState(false);
 
-  const products = getProductsByUnivers("hiver");
-  const categories = [...CATEGORIES.hiver, { id: "seconde-vie", label: "Seconde vie" }];
-  const visibleProducts =
-    categorie === "seconde-vie"
-      ? products.filter((p) => p.isRefurbished)
-      : categorie
-        ? products.filter((p) => p.category === categorie)
-        : products;
+  // Les produits reconditionnés restent masqués tant que la reprise et
+  // l'atelier n'existent pas : on n'affiche pas une promesse qu'on ne tient
+  // pas encore. Retirer ce filtre le jour où la seconde vie ouvre.
+  const products = getProductsByUnivers("hiver").filter((p) => !p.isRefurbished);
+  const categories = CATEGORIES.hiver;
+  const visibleProducts = categorie
+    ? products.filter((p) => p.category === categorie)
+    : products;
 
   /** Capture e-mail V1 : ouvre le client mail pré-rempli (pas de backend). */
   const handleEmailSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -97,7 +114,7 @@ export default function AccueilClient() {
                   Découvrir l&apos;univers Hiver
                 </Link>
                 <Link
-                  href="/contact"
+                  href="/guide-tailles"
                   className="rounded-full border border-ink/[.28] px-[30px] py-[15px] text-[14.5px] font-semibold transition-colors hover:bg-ink/5"
                 >
                   Trouver ma taille
@@ -105,27 +122,24 @@ export default function AccueilClient() {
               </div>
             </div>
 
-            {/* Échelle de température — élément signature */}
+            {/* Échelle de température — élément signature, borné à l'hiver */}
             <div className="mt-10">
               <p className="mb-3 font-mono text-[10.5px] font-medium tracking-[.14em] text-ink/50">
-                CE QUE COUVRE LA GAMME
+                {ECHELLE_HIVER.titre}
               </p>
-              <div
-                className="h-2 rounded-full"
-                style={{
-                  background: "linear-gradient(to right, #2F6A7A, #7FA3AC 42%, #D9C7B4 58%, #B85F2E)",
-                }}
-              />
+              <div className="h-2 rounded-full" style={{ background: ECHELLE_HIVER.gradient }} />
               <div className="mt-2.5 flex justify-between font-mono text-[11px] font-medium text-ink/55">
-                <span>−15 °C</span>
-                <span>0 °C</span>
-                <span>+18 °C</span>
-                <span>+38 °C</span>
+                {ECHELLE_HIVER.temperatures.map((t) => (
+                  <span key={t}>{t}</span>
+                ))}
               </div>
-              <div className="mt-1.5 flex justify-between text-[12.5px] text-ink/[.42]">
-                <span>Gants &amp; vestes chauffantes</span>
-                <span className="hidden sm:inline">Couches intermédiaires</span>
-                <span>Gamme été — au printemps</span>
+              <div className="mt-1.5 flex justify-between gap-3 text-[12.5px] text-ink/[.42]">
+                {ECHELLE_HIVER.usages.map((usage, i) => (
+                  // L'usage du milieu passe à la trappe sous 640 px, faute de place.
+                  <span key={usage} className={i === 1 ? "hidden sm:inline" : undefined}>
+                    {usage}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
@@ -142,11 +156,12 @@ export default function AccueilClient() {
         {/* ============ BANDE D'ARGUMENTS (4 colonnes) ============ */}
         <div className="mt-9 grid grid-cols-2 gap-px border-y border-ink/[.14] bg-ink/[.14] lg:grid-cols-4">
           {[
-            ["Stock à Lausanne", "Expédié sous 24 h ouvrées"],
+            ["Stock en Suisse romande", "Expédié depuis la région de Vevey (VD)"],
             // À-VALIDER: durées de garantie exactes à confirmer selon les conditions des fabricants retenus (voir page SAV).
             ["Garantie fabricant", "12 à 24 mois selon produit"],
-            ["Pièces à l'unité", "Ventilateurs, packs, batteries"],
-            ["Reprise valorisée", "Avoir jusqu'à CHF 60.–"],
+            ["Pièces à l'unité", "Batteries, chargeurs, éléments chauffants"],
+            // À-VALIDER: délai de réponse à confirmer selon disponibilité réelle (voir page SAV).
+            ["Réponse sous 48 h", "Par e-mail ou téléphone, en français"],
           ].map(([title, sub], i) => (
             <div key={title} className={`bg-paper py-5 ${i === 0 ? "pr-5" : "px-5"}`}>
               <p className="text-[13.5px] font-semibold">{title}</p>
@@ -182,112 +197,6 @@ export default function AccueilClient() {
             </div>
           )}
         </Reveal>
-      </section>
-
-      {/* ============ INDICE DE RÉPARABILITÉ ============ */}
-      <section aria-labelledby="reparabilite-titre" className="px-4 pt-[60px] sm:px-11">
-        <Reveal>
-          <div className="grid items-center gap-8 rounded-lg bg-surface p-8 sm:p-12 lg:grid-cols-[1fr_1.05fr] lg:gap-12">
-            <div>
-              <p className="eyebrow-mono mb-4 text-eco">Indice de réparabilité Thermovia</p>
-              <h2 id="reparabilite-titre" className="text-[28px] font-bold leading-[1.08] tracking-[-.028em] sm:text-[38px]">
-                Chaque produit est noté sur ce qu&apos;il devient après la panne.
-              </h2>
-              <p className="mt-[18px] text-[15.5px] leading-relaxed text-ink/70">
-                Batterie remplaçable, ventilateur démontable, textile lavable, pièces
-                disponibles cinq ans : la note s&apos;affiche sur la fiche produit et
-                conditionne notre référencement fournisseur.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Link
-                  href="/sav"
-                  className="rounded-full bg-ink px-6 py-[13px] text-[13.5px] font-semibold text-cream transition-colors hover:bg-ink/85"
-                >
-                  Voir la méthode
-                </Link>
-                <Link
-                  href="/seconde-vie"
-                  className="rounded-full border border-ink/30 px-6 py-[13px] text-[13.5px] font-semibold transition-colors hover:bg-ink/5"
-                >
-                  Filtrer par note ≥ 8
-                </Link>
-              </div>
-            </div>
-            <div className="flex flex-col gap-3.5">
-              {[
-                ["Batterie remplaçable sans outil", "9,5", 95],
-                ["Disponibilité des pièces (5 ans)", "8,7", 87],
-                ["Démontage documenté", "7,9", 79],
-                ["Textile lavable et recyclable", "7,2", 72],
-              ].map(([label, note, pct]) => (
-                <div key={label as string}>
-                  <div className="mb-[7px] flex justify-between text-[13.5px] font-semibold">
-                    <span>{label}</span>
-                    <span>{note}</span>
-                  </div>
-                  <div className="h-1.5 rounded-full bg-ink/[.12]">
-                    <div className="h-1.5 rounded-full bg-eco" style={{ width: `${pct}%` }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Reveal>
-      </section>
-
-      {/* ============ ATELIER ============ */}
-      <section aria-labelledby="atelier-titre" className="px-4 pt-[60px] sm:px-11">
-        <Reveal>
-          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-            <h2 id="atelier-titre" className="text-[32px] font-bold tracking-[-.025em]">
-              L&apos;atelier, au centre de la boutique
-            </h2>
-            <span className="font-mono text-[11px] font-medium tracking-[.12em] text-ink/50">
-              RUE — LAUSANNE
-            </span>
-          </div>
-        </Reveal>
-        <div className="grid gap-[18px] lg:grid-cols-[1.2fr_1fr_1fr]">
-          <Reveal>
-            <div className="min-h-[280px] overflow-hidden rounded-lg">
-              <PlaceholderVisual variant="neutral" caption="photo — établi de réparation, batteries et outils" />
-            </div>
-          </Reveal>
-          <Reveal delay={120}>
-            <div className="flex h-full flex-col justify-between rounded-lg border border-ink/[.12] p-7">
-              <div>
-                <p className="eyebrow-mono text-cool">Reprise</p>
-                <p className="mt-3.5 text-xl font-semibold leading-[1.25]">
-                  Rapportez votre ancien équipement, recevez un avoir
-                </p>
-                <p className="mt-2.5 text-[13.5px] leading-[1.55] text-ink/[.58]">
-                  Toute marque acceptée. Testé, réparé et remis en vente — ou démonté pour
-                  ses composants.
-                </p>
-              </div>
-              <Link href="/contact?sujet=sav" className="mt-[22px] text-[13.5px] font-semibold hover:underline">
-                Estimer ma reprise →
-              </Link>
-            </div>
-          </Reveal>
-          <Reveal delay={240}>
-            <div className="flex h-full flex-col justify-between rounded-lg border border-ink/[.12] p-7">
-              <div>
-                <p className="eyebrow-mono text-heat">Réparation</p>
-                <p className="mt-3.5 text-xl font-semibold leading-[1.25]">
-                  Diagnostic sous 48 h, devis avant intervention
-                </p>
-                <p className="mt-2.5 text-[13.5px] leading-[1.55] text-ink/[.58]">
-                  Batteries, ventilateurs, câblage chauffant, coutures : la plupart des
-                  pannes se réparent.
-                </p>
-              </div>
-              <Link href="/contact?sujet=sav" className="mt-[22px] text-[13.5px] font-semibold hover:underline">
-                Ouvrir un dossier SAV →
-              </Link>
-            </div>
-          </Reveal>
-        </div>
       </section>
 
       {/* ============ TEASER ÉTÉ ============ */}
@@ -353,7 +262,9 @@ export default function AccueilClient() {
                 Votre client e-mail s&apos;est ouvert — envoyez le message pour être averti.
               </p>
             ) : (
-              <form onSubmit={handleEmailSubmit} className="flex flex-none flex-wrap gap-2.5">
+              // Pas de flex-none ici : le champ doit pouvoir passer sous le
+              // bouton sur mobile, sinon il déborde de l'écran.
+              <form onSubmit={handleEmailSubmit} className="flex w-full flex-wrap gap-2.5 sm:w-auto">
                 <label htmlFor="email-capture" className="sr-only">
                   Votre adresse e-mail
                 </label>
@@ -363,7 +274,7 @@ export default function AccueilClient() {
                   type="email"
                   required
                   placeholder="votre@email.ch"
-                  className="min-w-[260px] rounded-full border border-ink/25 bg-transparent px-[26px] py-3.5 text-sm placeholder:text-ink/45 focus:border-cool focus:outline-none"
+                  className="w-full rounded-full border border-ink/25 bg-transparent px-[26px] py-3.5 text-sm placeholder:text-ink/45 focus:border-cool focus:outline-none sm:w-[260px]"
                 />
                 <button
                   type="submit"

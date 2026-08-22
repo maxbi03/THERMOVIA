@@ -17,8 +17,8 @@ export default function Footer() {
             <span className="ml-1">THERMOVIA</span>
           </p>
           <p className="mt-3 max-w-[270px] text-[13.5px] leading-relaxed text-ink/60">
-            Régulation thermique corporelle. Suisse romande, stock local, atelier de
-            réparation intégré.
+            Équipements chauffants sélectionnés et testés en Suisse romande. Stock et
+            expédition depuis la région de Vevey.
           </p>
         </div>
 
