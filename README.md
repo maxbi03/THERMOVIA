@@ -17,6 +17,7 @@ Le site tourne sur [http://localhost:3000](http://localhost:3000).
 
 - **Next.js 15** (App Router) + **TypeScript** + **Tailwind CSS v4**
 - Site statique (SSG) — pas de backend e-commerce en V1
+- Température affichée sur l'accueil : mesure réelle du réseau MétéoSuisse (station de Pully), lue directement depuis les données ouvertes `data.geo.admin.ch` par le navigateur — voir [`lib/meteo.ts`](lib/meteo.ts). Licence CC-BY : la mention « MétéoSuisse » doit rester affichée
 - Catalogue : données JSON locales dans [`data/products.json`](data/products.json) (produits d'exemple, à remplacer par un CMS/back-office plus tard)
 - Panier : état local (React Context + localStorage), validation via demande de devis — le paiement (Stripe/TWINT/PostFinance) sera branché avec le catalogue définitif
 - Langue : fr-CH uniquement (structure i18n-ready), devise CHF

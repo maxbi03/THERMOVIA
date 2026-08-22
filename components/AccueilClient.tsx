@@ -12,6 +12,7 @@
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import CategoryFilter from "@/components/CategoryFilter";
+import MeteoLive from "@/components/MeteoLive";
 import PlaceholderVisual from "@/components/PlaceholderVisual";
 import ProductCard from "@/components/ProductCard";
 import Reveal from "@/components/Reveal";
@@ -69,11 +70,7 @@ export default function AccueilClient() {
       <section className="px-4 pt-8 sm:px-11 sm:pt-11">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <p className="eyebrow-mono text-heat">Univers hiver — la saison commence ici</p>
-          <div className="hidden items-center gap-3.5 font-mono text-[11px] font-medium tracking-[.1em] text-ink/50 md:flex">
-            <span>LAUSANNE · 2 °C</span>
-            <span aria-hidden="true" className="h-3 w-px bg-ink/[.14]" />
-            <span>SÉLECTION ADAPTÉE À VOTRE MÉTÉO</span>
-          </div>
+          <MeteoLive />
         </div>
 
         {/* Hero : titre + CTA + échelle de température | visuel vertical */}
