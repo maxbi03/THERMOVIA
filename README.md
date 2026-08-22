@@ -20,15 +20,20 @@ Le site tourne sur [http://localhost:3000](http://localhost:3000).
 - Température affichée sur l'accueil : mesure réelle du réseau MétéoSuisse (station de Pully), lue directement depuis les données ouvertes `data.geo.admin.ch` par le navigateur — voir [`lib/meteo.ts`](lib/meteo.ts). Licence CC-BY : la mention « MétéoSuisse » doit rester affichée
 - Catalogue : données JSON locales dans [`data/products.json`](data/products.json) (produits d'exemple, à remplacer par un CMS/back-office plus tard)
 - Panier : état local (React Context + localStorage), validation via demande de devis — le paiement (Stripe/TWINT/PostFinance) sera branché avec le catalogue définitif
-- Langue : fr-CH uniquement (structure i18n-ready), devise CHF
+- Multilingue : français, allemand et italien (`/fr`, `/de`, `/it` ; la racine redirige vers `/fr`). Les textes vivent dans [`lib/i18n/`](lib/i18n/) — le français sert de référence de types, donc **une clé oubliée en DE ou IT casse le build**. Devise CHF
+- Recherche : côté navigateur, sur le catalogue déjà présent dans le bundle — voir [`lib/search.ts`](lib/search.ts). Suggestions dans le header, page de résultats sur `/{langue}/recherche?q=`
 
 ## Structure
 
 ```
-app/          Pages (App Router) : accueil, été, hiver, profils, entreprises, à-propos, SAV, contact, panier
-components/   Composants réutilisables : Header, Footer, Hero, ProductCard, CategoryFilter, ProfileSelector…
-data/         products.json — catalogue d'exemple
-lib/          site.ts (config), products.ts (accès typé au catalogue), cart.tsx (panier)
+app/[locale]/ Pages (App Router), une fois par langue : accueil, hiver, été, sport,
+              travail extérieur, entreprises, SAV, guide des tailles, à-propos,
+              contact, panier, recherche
+app/_archive/ Pages retirées du site, conservées hors routage (voir son README)
+components/   Composants réutilisables : Header, Footer, SearchBar, LocaleSwitcher…
+data/         products.json — catalogue d'exemple (textes encore en français seulement)
+lib/          i18n/ (dictionnaires), site.ts (structure de navigation), products.ts,
+              search.ts, meteo.ts, cart.tsx
 ```
 
 ## À faire avant la mise en ligne définitive
@@ -36,5 +41,6 @@ lib/          site.ts (config), products.ts (accès typé au catalogue), cart.ts
 - Remplacer les produits d'exemple par le catalogue réel (fournisseurs en cours de sélection)
 - Brancher le paiement en ligne et la gestion de stock
 - Compléter les mentions légales dans [`lib/site.ts`](lib/site.ts) (raison sociale, adresse, IDE) et rédiger les CGV
-- Ajouter les traductions de-CH / it-CH
+- Faire relire les traductions allemande et italienne par des locuteurs natifs
+- Traduire les données produits (`data/products.json`), encore en français dans les trois langues
 - Remplacer les placeholders visuels par de vraies photos produits (champ `imageUrl`)

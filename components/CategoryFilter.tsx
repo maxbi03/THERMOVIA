@@ -10,9 +10,18 @@ interface CategoryFilterProps {
   categories: { id: string; label: string }[];
   selected: string | null; // null = toutes les catégories
   onSelect: (categoryId: string | null) => void;
+  /** Libellé du bouton « toutes catégories », traduit. */
+  allLabel: string;
+  ariaLabel: string;
 }
 
-export default function CategoryFilter({ categories, selected, onSelect }: CategoryFilterProps) {
+export default function CategoryFilter({
+  categories,
+  selected,
+  onSelect,
+  allLabel,
+  ariaLabel,
+}: CategoryFilterProps) {
   const pill = (isActive: boolean) =>
     `rounded-full px-[15px] py-2 text-[12.5px] font-medium whitespace-nowrap transition-colors ${
       isActive
@@ -21,14 +30,14 @@ export default function CategoryFilter({ categories, selected, onSelect }: Categ
     }`;
 
   return (
-    <div className="flex flex-wrap gap-2" role="group" aria-label="Filtrer par type de produit">
+    <div className="flex flex-wrap gap-2" role="group" aria-label={ariaLabel}>
       <button
         type="button"
         onClick={() => onSelect(null)}
         aria-pressed={selected === null}
         className={pill(selected === null)}
       >
-        Tout
+        {allLabel}
       </button>
       {categories.map((cat) => (
         <button

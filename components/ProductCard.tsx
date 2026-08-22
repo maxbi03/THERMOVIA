@@ -10,8 +10,9 @@ import PlaceholderVisual from "@/components/PlaceholderVisual";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/site";
 import type { Product } from "@/lib/products";
+import type { Dictionary } from "@/lib/i18n";
 
-export default function ProductCard({ product }: { product: Product }) {
+export default function ProductCard({ product, dict }: { product: Product; dict: Dictionary }) {
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
 
@@ -36,7 +37,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <PlaceholderVisual
             univers={product.univers}
             variant={refurb ? "refurb" : undefined}
-            caption={`photo produit — ${product.name}`}
+            caption={`${dict.product.photoAlt} ${product.name}`}
           />
         </div>
         {/* L'indice de réparabilité n'est plus affiché : il supposait une
@@ -45,12 +46,12 @@ export default function ProductCard({ product }: { product: Product }) {
             fournisseur (voir /a-propos). */}
         {refurb && (
           <span className="absolute left-3.5 top-3.5 rounded-[3px] bg-eco px-2 py-1.5 font-mono text-[10px] font-semibold tracking-[.08em] text-[#EAF0EA]">
-            SECONDE VIE
+            {dict.product.badgeSecondLife}
           </span>
         )}
         {product.isBestSeller && (
           <span className="absolute right-3.5 top-3.5 rounded-[3px] bg-heat px-2 py-1.5 font-mono text-[10px] font-semibold tracking-[.08em] text-white">
-            BEST
+            {dict.product.badgeBest}
           </span>
         )}
       </div>
@@ -86,14 +87,14 @@ export default function ProductCard({ product }: { product: Product }) {
           <button
             type="button"
             onClick={handleAdd}
-            aria-label={`Ajouter ${product.name} au panier`}
+            aria-label={`${dict.product.addAria} — ${product.name}`}
             className={`rounded-full px-3.5 py-2 text-[12.5px] font-semibold transition-colors ${
               added
                 ? "bg-eco text-white"
                 : "border border-ink/30 text-ink hover:bg-ink/5"
             }`}
           >
-            {added ? "Ajouté ✓" : "Ajouter"}
+            {added ? dict.product.added : dict.product.add}
           </button>
         </div>
       </div>

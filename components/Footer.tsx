@@ -1,11 +1,13 @@
 /**
- * Pied de page design 2a : 4 colonnes (marque / BOUTIQUE / SERVICE / LÉGAL),
+ * Pied de page : 4 colonnes (marque / BOUTIQUE / SERVICE / LÉGAL),
  * bordure haute fine, valeurs légales depuis SITE.legal (placeholders).
+ * Ne liste que des pages qui existent réellement.
  */
 import Link from "next/link";
-import { FOOTER_LINKS, SITE } from "@/lib/site";
+import { localePath, type Dictionary, type Locale } from "@/lib/i18n";
+import { FOOTER_ITEMS, SITE } from "@/lib/site";
 
-export default function Footer() {
+export default function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   return (
     <footer className="mt-16 px-4 sm:px-11">
       <div className="grid gap-9 border-t border-ink/[.14] py-10 pb-11 md:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
@@ -17,42 +19,55 @@ export default function Footer() {
             <span className="ml-1">THERMOVIA</span>
           </p>
           <p className="mt-3 max-w-[270px] text-[13.5px] leading-relaxed text-ink/60">
-            Équipements chauffants sélectionnés et testés en Suisse romande. Stock et
-            expédition depuis la région de Vevey.
+            {dict.footer.brandText}
           </p>
         </div>
 
         {/* Boutique */}
-        <nav aria-label="Liens boutique" className="flex flex-col gap-2 text-[13.5px] text-ink/60">
-          <p className="mb-1 text-xs font-semibold tracking-[.08em] text-ink">BOUTIQUE</p>
-          {FOOTER_LINKS.boutique.map((link) => (
-            <Link key={link.label} href={link.href} className="hover:text-ink hover:underline">
-              {link.label}
+        <nav aria-label={dict.footer.shopAria} className="flex flex-col gap-2 text-[13.5px] text-ink/60">
+          <p className="mb-1 text-xs font-semibold tracking-[.08em] text-ink">
+            {dict.footer.shopTitle}
+          </p>
+          {FOOTER_ITEMS.shop.map((item) => (
+            <Link
+              key={item.key}
+              href={localePath(locale, item.href)}
+              className="hover:text-ink hover:underline"
+            >
+              {dict.footer.shop[item.key]}
             </Link>
           ))}
         </nav>
 
         {/* Service */}
-        <nav aria-label="Liens service" className="flex flex-col gap-2 text-[13.5px] text-ink/60">
-          <p className="mb-1 text-xs font-semibold tracking-[.08em] text-ink">SERVICE</p>
-          {FOOTER_LINKS.service.map((link) => (
-            <Link key={link.label} href={link.href} className="hover:text-ink hover:underline">
-              {link.label}
+        <nav aria-label={dict.footer.serviceAria} className="flex flex-col gap-2 text-[13.5px] text-ink/60">
+          <p className="mb-1 text-xs font-semibold tracking-[.08em] text-ink">
+            {dict.footer.serviceTitle}
+          </p>
+          {FOOTER_ITEMS.service.map((item) => (
+            <Link
+              key={item.key}
+              href={localePath(locale, item.href)}
+              className="hover:text-ink hover:underline"
+            >
+              {dict.footer.service[item.key]}
             </Link>
           ))}
         </nav>
 
         {/* Légal — placeholders à compléter avant mise en ligne */}
         <div className="flex flex-col gap-2 text-[13.5px] text-ink/60">
-          <p className="mb-1 text-xs font-semibold tracking-[.08em] text-ink">LÉGAL</p>
+          <p className="mb-1 text-xs font-semibold tracking-[.08em] text-ink">
+            {dict.footer.legalTitle}
+          </p>
           <span>
             {SITE.legal.raisonSociale} — IDE : {SITE.legal.ide}
           </span>
           <a href={`mailto:${SITE.email}`} className="hover:text-ink hover:underline">
             {SITE.email}
           </a>
-          <span>Prix en CHF, TVA suisse incluse</span>
-          <span>CGV — en rédaction</span>
+          <span>{dict.footer.vat}</span>
+          <span>{dict.footer.cgv}</span>
         </div>
       </div>
     </footer>

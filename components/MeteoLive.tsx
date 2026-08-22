@@ -2,7 +2,7 @@
 
 /**
  * Bandeau météo de l'accueil : température réelle mesurée par MétéoSuisse
- * (station de Vevey / Corseaux), rafraîchie automatiquement.
+ * (station de Pully, agglomération lausannoise), rafraîchie automatiquement.
  * Tant qu'aucune mesure valide n'est disponible (chargement, source hors
  * ligne, données périmées), le bandeau ne s'affiche pas : jamais de
  * température inventée ni de mention de source sans valeur derrière.
@@ -12,14 +12,14 @@ import {
   fetchLatestTemperature,
   formatCelsius,
   formatMeasuredAt,
-  METEO_STATION,
   type Measure,
 } from "@/lib/meteo";
+import { LOCALE_TAGS, type Dictionary, type Locale } from "@/lib/i18n";
 
 /** Cadence de publication des mesures MétéoSuisse : 10 minutes. */
 const REFRESH_MS = 10 * 60 * 1000;
 
-export default function MeteoLive() {
+export default function MeteoLive({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const [measure, setMeasure] = useState<Measure | null>(null);
 
   useEffect(() => {
@@ -47,13 +47,13 @@ export default function MeteoLive() {
   return (
     <div className="hidden items-center gap-3.5 font-mono text-[11px] font-medium tracking-[.1em] text-ink/50 md:flex">
       <span>
-        {METEO_STATION.displayLocation.toUpperCase()} · {formatCelsius(measure.celsius)}
+        {dict.meteo.location} · {formatCelsius(measure.celsius)}
       </span>
       <span aria-hidden="true" className="h-3 w-px bg-ink/[.14]" />
       <span>
-        MESURE MÉTÉOSUISSE ·{" "}
+        {dict.meteo.source} ·{" "}
         <time dateTime={measure.measuredAt.toISOString()}>
-          {formatMeasuredAt(measure.measuredAt)}
+          {formatMeasuredAt(measure.measuredAt, LOCALE_TAGS[locale])}
         </time>
       </span>
     </div>

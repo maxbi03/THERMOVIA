@@ -1,28 +1,27 @@
 import type { MetadataRoute } from "next";
-import { SITE } from "@/lib/site";
+import { LOCALES, LOCALE_TAGS } from "@/lib/i18n";
+import { PUBLIC_ROUTES, SITE } from "@/lib/site";
 
-/** Sitemap simple : toutes les pages publiques du site. */
+/**
+ * Sitemap : chaque page publique, déclinée dans les trois langues.
+ * Chaque entrée déclare ses équivalents linguistiques (hreflang), ce qui
+ * évite que Google traite /de/sav et /fr/sav comme du contenu dupliqué.
+ * La page de résultats de recherche est volontairement absente.
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
-  // Uniquement les pages assumées : /textile-couches, /accessoires et
-  // /seconde-vie existent encore en fichier mais ne sont plus liées ni
-  // référencées tant que leur contenu n'est pas d'actualité.
-  const routes = [
-    "",
-    "/hiver",
-    "/ete",
-    "/sport",
-    "/travail-exterieur",
-    "/entreprises",
-    "/guide-tailles",
-    "/sav",
-    "/a-propos",
-    "/contact",
-  ];
+  const lastModified = new Date();
 
-  return routes.map((route) => ({
-    url: `${SITE.url}${route}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: route === "" ? 1 : 0.7,
-  }));
+  return LOCALES.flatMap((locale) =>
+    PUBLIC_ROUTES.map((route) => ({
+      url: `${SITE.url}/${locale}${route}`,
+      lastModified,
+      changeFrequency: "weekly" as const,
+      priority: route === "" ? 1 : 0.7,
+      alternates: {
+        languages: Object.fromEntries(
+          LOCALES.map((l) => [LOCALE_TAGS[l], `${SITE.url}/${l}${route}`])
+        ),
+      },
+    }))
+  );
 }

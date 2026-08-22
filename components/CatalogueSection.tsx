@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Section catalogue filtrable (page /hiver, ex-/ete) :
+ * Section catalogue filtrable (page /hiver) :
  * filtre par catégorie + grille de cartes.
  * Le paramètre d'URL ?cat= (mega-menu Hiver du Header) pré-applique un filtre ;
  * lu via useSearchParams → le parent doit envelopper dans <Suspense>.
@@ -9,14 +9,22 @@
  * propre à la page, jamais présent dans le mega-menu.
  */
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import CategoryFilter from "@/components/CategoryFilter";
 import ProductCard from "@/components/ProductCard";
-import { AUDIENCE_FILTERS, CATEGORIES, type Audience, type Product, type Univers } from "@/lib/products";
+import {
+  AUDIENCE_FILTER_IDS,
+  CATEGORY_IDS,
+  type Audience,
+  type Product,
+  type Univers,
+} from "@/lib/products";
+import type { Dictionary } from "@/lib/i18n";
 
 interface CatalogueSectionProps {
   univers: Univers;
   products: Product[];
+  dict: Dictionary;
   /** Affiche la rangée de filtres secondaires par profil (page /hiver). */
   showAudienceFilter?: boolean;
 }
@@ -24,23 +32,27 @@ interface CatalogueSectionProps {
 export default function CatalogueSection({
   univers,
   products,
+  dict,
   showAudienceFilter = false,
 }: CatalogueSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedAudience, setSelectedAudience] = useState<Audience | null>(null);
 
-  const categories = CATEGORIES[univers];
+  // Les libellés de catégorie viennent du dictionnaire, les identifiants des données.
+  const categories = useMemo(() => {
+    const labels = dict.categories[univers] as Record<string, string>;
+    return CATEGORY_IDS[univers].map((id) => ({ id, label: labels[id] ?? id }));
+  }, [univers, dict]);
 
   // Pré-applique la catégorie passée en query string (ex. /hiver?cat=vestes
   // depuis le mega-menu). Réactif aux navigations internes successives.
   const searchParams = useSearchParams();
   const catParam = searchParams.get("cat");
   useEffect(() => {
-    if (catParam && categories.some((c) => c.id === catParam)) {
+    if (catParam && CATEGORY_IDS[univers].includes(catParam)) {
       setSelectedCategory(catParam);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [catParam]);
+  }, [catParam, univers]);
 
   // Produits reconditionnés masqués tant que la reprise n'existe pas
   // (même règle que sur la page d'accueil).
@@ -61,17 +73,23 @@ export default function CatalogueSection({
     }`;
 
   return (
-    <section aria-label="Catalogue de produits" className="space-y-6">
+    <section aria-label={dict.hiver.catalogueAria} className="space-y-6">
       <CategoryFilter
         categories={categories}
         selected={selectedCategory}
         onSelect={setSelectedCategory}
+        allLabel={dict.common.all}
+        ariaLabel={dict.categories.filterAria}
       />
 
       {showAudienceFilter && (
-        <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filtrer par profil">
+        <div
+          className="flex flex-wrap items-center gap-2"
+          role="group"
+          aria-label={dict.categories.profileAria}
+        >
           <span className="font-mono text-[10.5px] font-medium tracking-[.14em] text-ink/50">
-            PROFIL
+            {dict.categories.profileLabel}
           </span>
           <button
             type="button"
@@ -79,17 +97,17 @@ export default function CatalogueSection({
             aria-pressed={selectedAudience === null}
             className={audiencePill(selectedAudience === null)}
           >
-            Tous
+            {dict.categories.profileAll}
           </button>
-          {AUDIENCE_FILTERS.map((a) => (
+          {AUDIENCE_FILTER_IDS.map((id) => (
             <button
-              key={a.id}
+              key={id}
               type="button"
-              onClick={() => setSelectedAudience(a.id)}
-              aria-pressed={selectedAudience === a.id}
-              className={audiencePill(selectedAudience === a.id)}
+              onClick={() => setSelectedAudience(id)}
+              aria-pressed={selectedAudience === id}
+              className={audiencePill(selectedAudience === id)}
             >
-              {a.label}
+              {dict.categories.profiles[id as keyof typeof dict.categories.profiles]}
             </button>
           ))}
         </div>
@@ -97,13 +115,12 @@ export default function CatalogueSection({
 
       {visible.length === 0 ? (
         <p className="rounded-lg border border-dashed border-ink/20 p-8 text-center text-ink/55">
-          Aucun produit d&apos;exemple dans cette catégorie pour l&apos;instant — le catalogue
-          final est en cours de constitution.
+          {dict.common.emptyCategory}
         </p>
       ) : (
         <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-4">
           {visible.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} dict={dict} />
           ))}
         </div>
       )}

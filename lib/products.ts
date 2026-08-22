@@ -46,33 +46,34 @@ export interface Product {
   isBestSeller?: boolean;
 }
 
-/** Catégories par univers, avec libellés d'affichage (utilisées par les filtres). */
-export const CATEGORIES: Record<Univers, { id: string; label: string }[]> = {
+/**
+ * Identifiants de catégorie par univers, dans l'ordre d'affichage.
+ * Les LIBELLÉS ne sont plus ici : ils vivent dans les dictionnaires
+ * (dict.categories.hiver / dict.categories.ete), puisqu'ils sont traduits.
+ * Ces identifiants servent d'URL (?cat=) et de clé de données : ils ne
+ * changent pas d'une langue à l'autre.
+ */
+// À-VALIDER: noms et regroupements des 4 sous-catégories hiver (alignés sur le mega-menu) à ajuster une fois le catalogue final défini (dépend des échantillons retenus).
+export const CATEGORY_IDS: Record<Univers, string[]> = {
   ete: [
-    { id: "gilet-ventile", label: "Gilets ventilés" },
-    { id: "gilet-pcm", label: "Gilets PCM" },
-    { id: "ventilateur-cou", label: "Ventilateurs de cou" },
-    { id: "ventilateur-portable", label: "Ventilateurs portables" },
-    { id: "ventilateur-table", label: "Ventilateurs de table" },
-    { id: "accessoire-rafraichissant", label: "Autres accessoires" },
+    "gilet-ventile",
+    "gilet-pcm",
+    "ventilateur-cou",
+    "ventilateur-portable",
+    "ventilateur-table",
+    "accessoire-rafraichissant",
   ],
-  // À-VALIDER: noms et regroupements des 4 sous-catégories hiver (alignés sur le mega-menu) à ajuster une fois le catalogue final défini (dépend des échantillons retenus).
-  hiver: [
-    { id: "vestes", label: "Vestes" },
-    { id: "gilets", label: "Gilets" },
-    { id: "mains-pieds", label: "Mains & pieds" },
-    { id: "accessoires", label: "Batteries & accessoires" },
-  ],
+  hiver: ["vestes", "gilets", "mains-pieds", "accessoires"],
 };
 
 /**
  * Profils clients proposés en filtre secondaire sur la page /hiver
  * (le mega-menu ne filtre que par catégorie ; les profils restent sur la page).
  */
-export const AUDIENCE_FILTERS: { id: Audience; label: string }[] = [
-  { id: "travail-exterieur", label: "Pro" },
-  { id: "sport", label: "Sport" },
-  { id: "particuliers", label: "Particuliers" },
+export const AUDIENCE_FILTER_IDS: Audience[] = [
+  "travail-exterieur",
+  "sport",
+  "particuliers",
 ];
 
 const products = productsJson as Product[];
@@ -92,16 +93,7 @@ export function getProductsByAudience(audience: Audience): Product[] {
   return products.filter((p) => p.audiences.includes(audience));
 }
 
-/** Libellé d'une catégorie à partir de son id. */
-export function getCategoryLabel(categoryId: string): string {
-  for (const univers of Object.values(CATEGORIES)) {
-    const found = univers.find((c) => c.id === categoryId);
-    if (found) return found.label;
-  }
-  return categoryId;
-}
-
-/** Produits reconditionnés en atelier (page /seconde-vie et filtre dédié). */
+/** Produits reconditionnés — masqués partout tant que la reprise n'existe pas. */
 export function getRefurbishedProducts(): Product[] {
   return products.filter((p) => p.isRefurbished);
 }

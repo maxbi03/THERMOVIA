@@ -3,38 +3,26 @@ import EteNotifyForm from "@/components/EteNotifyForm";
 import Hero from "@/components/Hero";
 import PlaceholderVisual from "@/components/PlaceholderVisual";
 import Reveal from "@/components/Reveal";
+import { resolvePage, type LocaleParams } from "@/lib/i18n";
 
-export const metadata: Metadata = {
-  title: "Été — la gamme rafraîchissante arrive",
-  description:
-    "Gilets ventilés, gilets PCM et ventilateurs de cou et portables : la gamme été Thermovia est en préparation. Laissez votre e-mail pour être averti·e au lancement.",
-};
+export async function generateMetadata({ params }: LocaleParams): Promise<Metadata> {
+  const { dict } = await resolvePage(params);
+  return { title: dict.meta.ete.title, description: dict.meta.ete.description };
+}
 
 // À-VALIDER: liste indicative des produits annoncés, à ajuster selon le sourcing été réel au printemps.
-const GAMME_A_VENIR = [
-  {
-    label: "Gilets ventilés",
-    sublabel: "Flux d'air continu pour le chantier, la logistique et les loisirs",
-  },
-  {
-    label: "Gilets PCM",
-    sublabel: "Fraîcheur constante sans batterie, par matériau à changement de phase",
-  },
-  {
-    label: "Ventilateurs de cou & portables",
-    sublabel: "Mains libres ou format poche, pour les trajets et les journées dehors",
-  },
-] as const;
 
 /** Page teaser de l'univers ÉTÉ : gamme en préparation, lancement au printemps. */
-export default function EtePage() {
+export default async function EtePage({ params }: LocaleParams) {
+  const { dict } = await resolvePage(params);
+
   return (
     <>
       <Hero
         variant="cool"
-        eyebrow="Univers été — bientôt disponible"
-        title="La gamme été arrive avec les beaux jours"
-        subtitle="Nous préparons la sélection anti-canicule : elle ouvrira après le lancement de l'hiver, une fois les échantillons testés en conditions réelles."
+        eyebrow={dict.ete.eyebrow}
+        title={dict.ete.title}
+        subtitle={dict.ete.subtitle}
       />
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
@@ -42,22 +30,19 @@ export default function EtePage() {
           {/* Visuel été cohérent avec l'identité (rayures teal fraîches) */}
           <Reveal>
             <div className="min-h-[300px] overflow-hidden rounded-lg lg:min-h-full">
-              <PlaceholderVisual
-                univers="ete"
-                caption="photo teaser — gilet ventilé porté en plein été, lumière chaude"
-              />
+              <PlaceholderVisual univers="ete" caption={dict.ete.caption} />
             </div>
           </Reveal>
 
           <Reveal delay={120}>
             <div className="flex h-full flex-col justify-between gap-8">
               <div>
-                <p className="eyebrow-mono mb-3 text-cool">Au programme</p>
+                <p className="eyebrow-mono mb-3 text-cool">{dict.ete.programEyebrow}</p>
                 <h2 className="text-[28px] font-bold tracking-[-.025em]">
-                  Ce que la gamme été vous réserve
+                  {dict.ete.programTitle}
                 </h2>
                 <div className="mt-6 flex flex-col gap-3.5">
-                  {GAMME_A_VENIR.map((item) => (
+                  {dict.ete.program.map((item) => (
                     <div key={item.label} className="rounded-lg border border-ink/[.12] p-6">
                       <p className="text-[15.5px] font-semibold">{item.label}</p>
                       <p className="mt-1.5 text-[13.5px] leading-[1.55] text-ink/[.58]">
@@ -69,11 +54,9 @@ export default function EtePage() {
               </div>
 
               <div className="rounded-lg bg-surface p-7">
-                <p className="text-lg font-semibold">Être averti·e au lancement</p>
-                <p className="mb-5 mt-1.5 text-sm text-ink/[.58]">
-                  Un seul message à l&apos;ouverture de la gamme été. Pas de newsletter.
-                </p>
-                <EteNotifyForm />
+                <p className="text-lg font-semibold">{dict.ete.notifyTitle}</p>
+                <p className="mb-5 mt-1.5 text-sm text-ink/[.58]">{dict.ete.notifyText}</p>
+                <EteNotifyForm dict={dict} />
               </div>
             </div>
           </Reveal>
