@@ -12,7 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/seconde-vie",
     "/travail-exterieur",
     "/sport",
-    "/particuliers",
     "/entreprises",
     "/a-propos",
     "/sav",

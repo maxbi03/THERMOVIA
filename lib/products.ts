@@ -52,13 +52,24 @@ export const CATEGORIES: Record<Univers, { id: string; label: string }[]> = {
     { id: "ventilateur-table", label: "Ventilateurs de table" },
     { id: "accessoire-rafraichissant", label: "Autres accessoires" },
   ],
+  // À-VALIDER: noms et regroupements des 4 sous-catégories hiver (alignés sur le mega-menu) à ajuster une fois le catalogue final défini (dépend des échantillons retenus).
   hiver: [
-    { id: "veste-chauffante", label: "Vestes chauffantes" },
-    { id: "gants-chauffants", label: "Gants chauffants" },
-    { id: "gilet-chauffant", label: "Gilets chauffants" },
-    { id: "accessoire-chauffant", label: "Autres accessoires" },
+    { id: "vestes", label: "Vestes" },
+    { id: "gilets", label: "Gilets" },
+    { id: "extremites", label: "Extrémités" },
+    { id: "accessoires", label: "Accessoires" },
   ],
 };
+
+/**
+ * Profils clients proposés en filtre secondaire sur la page /hiver
+ * (le mega-menu ne filtre que par catégorie ; les profils restent sur la page).
+ */
+export const AUDIENCE_FILTERS: { id: Audience; label: string }[] = [
+  { id: "travail-exterieur", label: "Pro" },
+  { id: "sport", label: "Sport" },
+  { id: "particuliers", label: "Particuliers" },
+];
 
 const products = productsJson as Product[];
 

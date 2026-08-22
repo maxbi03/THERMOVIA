@@ -21,24 +21,39 @@ export const SITE = {
 } as const;
 
 /**
- * Liens de la navigation principale (Header) — vocabulaire « verbe d'usage »
- * du design 2a : Chauffer (hiver) / Rafraîchir (été).
+ * Liens de la navigation principale (Header) — ordre du lancement hiver.
+ * Les familles secondaires (textile, accessoires, seconde vie) restent
+ * accessibles via le pied de page.
  */
 export const NAV_LINKS = [
-  { href: "/hiver", label: "Chauffer" },
-  { href: "/ete", label: "Rafraîchir" },
-  { href: "/textile-couches", label: "Textile & couches" },
-  { href: "/accessoires", label: "Accessoires" },
-  { href: "/seconde-vie", label: "Seconde vie" },
-  { href: "/travail-exterieur", label: "Métiers" },
+  { href: "/hiver", label: "Hiver" },
+  { href: "/ete", label: "Été" },
+  // À-VALIDER: l'ordre de ces deux entrées (Sport / Travail extérieur) pourra être inversé selon les résultats de la campagne marketing de lancement.
+  { href: "/sport", label: "Sport" },
+  { href: "/travail-exterieur", label: "Travail extérieur" },
   { href: "/entreprises", label: "Entreprises" },
+  { href: "/sav", label: "SAV" },
+  { href: "/contact", label: "Contact" },
+] as const;
+
+/**
+ * Sous-catégories du mega-menu « Hiver » (panneau au survol sur bureau,
+ * au tap sur mobile). Chaque entrée mène vers /hiver avec le filtre
+ * de catégorie pré-appliqué via le paramètre ?cat=.
+ */
+// À-VALIDER: noms et regroupements des 4 sous-catégories à ajuster une fois le catalogue final défini (dépend des échantillons retenus).
+export const HIVER_MEGA_MENU = [
+  { cat: "vestes", label: "Vestes", sublabel: "pro & sport" },
+  { cat: "gilets", label: "Gilets", sublabel: "fins et légers" },
+  { cat: "extremites", label: "Extrémités", sublabel: "gants & pieds" },
+  { cat: "accessoires", label: "Accessoires", sublabel: "petits objets" },
 ] as const;
 
 /** Colonnes de liens du pied de page (design 2a). */
 export const FOOTER_LINKS = {
   boutique: [
-    { href: "/hiver", label: "Chauffer" },
-    { href: "/ete", label: "Rafraîchir" },
+    { href: "/hiver", label: "Hiver" },
+    { href: "/ete", label: "Été" },
     { href: "/textile-couches", label: "Textile & couches" },
     { href: "/seconde-vie", label: "Seconde vie" },
     { href: "/entreprises", label: "Entreprises" },

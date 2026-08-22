@@ -1,79 +1,57 @@
 "use client";
 
 /**
- * Page d'accueil — design 2a (handoff refonte).
- * Sections : bascule saison + météo, hero avec échelle de température,
- * bande d'arguments, grille produits filtrable, indice de réparabilité,
- * atelier (reprise / réparation), bandeau entreprises, deux univers,
- * capture e-mail.
- * La bascule « J'ai froid dehors / J'ai trop chaud » change l'univers affiché
- * (hero, produits, accent teal ↔ terracotta) sans changer de page.
+ * Page d'accueil — design 2a, orientée lancement HIVER grand public.
+ * Sections : hero hiver avec échelle de température, bande d'arguments,
+ * grille produits hiver filtrable, indice de réparabilité, atelier
+ * (reprise / réparation), teaser été, accès rapides (Sport / Travail
+ * extérieur / Entreprises), capture e-mail.
+ * L'ancienne bascule « J'ai froid dehors / J'ai trop chaud » a été retirée :
+ * le lancement se fait hiver d'abord, l'été vit en teaser sur /ete.
  */
 import Link from "next/link";
-import { useEffect, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import CategoryFilter from "@/components/CategoryFilter";
 import PlaceholderVisual from "@/components/PlaceholderVisual";
 import ProductCard from "@/components/ProductCard";
 import Reveal from "@/components/Reveal";
-import { CATEGORIES, getProductsByUnivers, type Univers } from "@/lib/products";
+import { CATEGORIES, getProductsByUnivers } from "@/lib/products";
 import { SITE } from "@/lib/site";
 
-/** Contenu du hero et libellés dépendant de l'univers actif. */
-const UNIVERS_CONTENT = {
-  hiver: {
-    heroLines: ["Le froid ne devrait", "pas décider de"],
-    heroAccent: "votre journée.",
-    accentClass: "text-cool",
-    subtitle:
-      "Vestes, gilets et gants chauffants sélectionnés un par un, testés en Suisse romande. Batteries et pièces disponibles pendant toute la vie du produit.",
-    cta: "Acheter l'univers Hiver",
-    ctaHref: "/hiver",
-    weather: "LAUSANNE · 2 °C",
-    surTitre: "UNIVERS HIVER",
-    surTitreClass: "text-heat",
-    heroCaption: "photo héro — veste chauffante portée en extérieur froid, cadrage vertical 3:4",
+/** Accès rapides sous le teaser été — ordre : Sport, Travail extérieur, Entreprises. */
+const ACCES_RAPIDES = [
+  {
+    href: "/sport",
+    eyebrow: "Sport",
+    title: "Extrémités au chaud, sorties toute l'année",
+    text: "Gants fins pour le vélo, gilets légers pour l'avant-course : la chaleur qui suit l'effort.",
   },
-  ete: {
-    heroLines: ["La chaleur ne devrait", "pas décider de"],
-    heroAccent: "votre journée.",
-    accentClass: "text-heat",
-    subtitle:
-      "Gilets ventilés et PCM sélectionnés un par un, testés en Suisse romande. Batteries et pièces disponibles pendant toute la vie du produit.",
-    cta: "Acheter l'univers Été",
-    ctaHref: "/ete",
-    weather: "LAUSANNE · 29 °C",
-    surTitre: "UNIVERS ÉTÉ",
-    surTitreClass: "text-cool",
-    heroCaption: "photo héro — gilet ventilé porté sur chantier estival, cadrage vertical 3:4",
+  {
+    href: "/travail-exterieur",
+    eyebrow: "Travail extérieur",
+    title: "Tenir la journée dehors, sans se figer",
+    text: "BTP, agriculture, logistique : des équipements compatibles avec vos EPI.",
   },
-} as const;
+  {
+    href: "/entreprises",
+    eyebrow: "Entreprises",
+    title: "Équiper une équipe, du devis à la maintenance",
+    text: "Commandes en volume, personnalisation logo et parc suivi par l'atelier.",
+  },
+] as const;
 
 export default function AccueilClient() {
-  // Défaut : maquette (hiver) ; ajusté à la saison courante côté client
-  // (useEffect pour éviter tout écart entre HTML pré-rendu et hydratation).
-  const [univers, setUnivers] = useState<Univers>("hiver");
   const [categorie, setCategorie] = useState<string | null>(null);
   const [emailSent, setEmailSent] = useState(false);
 
-  useEffect(() => {
-    const month = new Date().getMonth() + 1;
-    if (month >= 5 && month <= 9) setUnivers("ete");
-  }, []);
-
-  const content = UNIVERS_CONTENT[univers];
-  const products = getProductsByUnivers(univers);
-  const categories = [...CATEGORIES[univers], { id: "seconde-vie", label: "Seconde vie" }];
+  const products = getProductsByUnivers("hiver");
+  const categories = [...CATEGORIES.hiver, { id: "seconde-vie", label: "Seconde vie" }];
   const visibleProducts =
     categorie === "seconde-vie"
       ? products.filter((p) => p.isRefurbished)
       : categorie
         ? products.filter((p) => p.category === categorie)
         : products;
-
-  const switchUnivers = (u: Univers) => {
-    setUnivers(u);
-    setCategorie(null);
-  };
 
   /** Capture e-mail V1 : ouvre le client mail pré-rempli (pas de backend). */
   const handleEmailSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -85,26 +63,14 @@ export default function AccueilClient() {
     setEmailSent(true);
   };
 
-  const segment = (isActive: boolean) =>
-    `whitespace-nowrap rounded-full px-[22px] py-2.5 text-[13.5px] font-semibold transition-colors ${
-      isActive ? "bg-ink text-white" : "text-ink/55 hover:text-ink"
-    }`;
-
   return (
     <>
-      {/* ============ BASCULE SAISON + MÉTÉO + HERO ============ */}
+      {/* ============ MÉTÉO + HERO HIVER ============ */}
       <section className="px-4 pt-8 sm:px-11 sm:pt-11">
         <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="inline-flex gap-1 rounded-full bg-ink/[.07] p-[5px]" role="group" aria-label="Choisir l'univers">
-            <button type="button" onClick={() => switchUnivers("hiver")} aria-pressed={univers === "hiver"} className={segment(univers === "hiver")}>
-              J&apos;ai froid dehors
-            </button>
-            <button type="button" onClick={() => switchUnivers("ete")} aria-pressed={univers === "ete"} className={segment(univers === "ete")}>
-              J&apos;ai trop chaud
-            </button>
-          </div>
+          <p className="eyebrow-mono text-heat">Univers hiver — la saison commence ici</p>
           <div className="hidden items-center gap-3.5 font-mono text-[11px] font-medium tracking-[.1em] text-ink/50 md:flex">
-            <span>{content.weather}</span>
+            <span>LAUSANNE · 2 °C</span>
             <span aria-hidden="true" className="h-3 w-px bg-ink/[.14]" />
             <span>SÉLECTION ADAPTÉE À VOTRE MÉTÉO</span>
           </div>
@@ -115,21 +81,23 @@ export default function AccueilClient() {
           <div className="flex flex-col justify-between">
             <div>
               <h1 className="text-[44px] font-bold leading-[.96] tracking-[-.038em] sm:text-[64px] xl:text-[82px]">
-                {content.heroLines[0]}
+                Le froid ne devrait
                 <br />
-                {content.heroLines[1]}
+                pas décider de
                 <br />
-                <span className={content.accentClass}>{content.heroAccent}</span>
+                <span className="text-cool">votre journée.</span>
               </h1>
               <p className="mt-6 max-w-[520px] text-[17px] leading-[1.62] text-ink/[.66]">
-                {content.subtitle}
+                Vestes, gilets et gants chauffants pour les trajets, les balades, le sport et
+                le travail dehors. Sélection testée en Suisse romande, batteries et pièces
+                disponibles pendant toute la vie du produit.
               </p>
               <div className="mt-[30px] flex flex-wrap gap-3">
                 <Link
-                  href={content.ctaHref}
+                  href="/hiver"
                   className="rounded-full bg-ink px-[30px] py-[15px] text-[14.5px] font-bold text-white transition-colors hover:bg-ink/85"
                 >
-                  {content.cta}
+                  Découvrir l&apos;univers Hiver
                 </Link>
                 <Link
                   href="/contact"
@@ -160,14 +128,17 @@ export default function AccueilClient() {
               <div className="mt-1.5 flex justify-between text-[12.5px] text-ink/[.42]">
                 <span>Gants &amp; vestes chauffantes</span>
                 <span className="hidden sm:inline">Couches intermédiaires</span>
-                <span>Gilets ventilés &amp; PCM</span>
+                <span>Gamme été — au printemps</span>
               </div>
             </div>
           </div>
 
           {/* Visuel héro vertical 3:4 */}
           <div className="min-h-[320px] overflow-hidden rounded-md lg:min-h-[520px]">
-            <PlaceholderVisual univers={univers} caption={content.heroCaption} />
+            <PlaceholderVisual
+              univers="hiver"
+              caption="photo héro — veste chauffante portée en extérieur froid, cadrage vertical 3:4"
+            />
           </div>
         </div>
 
@@ -175,7 +146,8 @@ export default function AccueilClient() {
         <div className="mt-9 grid grid-cols-2 gap-px border-y border-ink/[.14] bg-ink/[.14] lg:grid-cols-4">
           {[
             ["Stock à Lausanne", "Expédié sous 24 h ouvrées"],
-            ["Garantie 2 ans", "Batteries comprises"],
+            // À-VALIDER: durées de garantie exactes à confirmer selon les conditions des fabricants retenus (voir page SAV).
+            ["Garantie fabricant", "12 à 24 mois selon produit"],
             ["Pièces à l'unité", "Ventilateurs, packs, batteries"],
             ["Reprise valorisée", "Avoir jusqu'à CHF 60.–"],
           ].map(([title, sub], i) => (
@@ -187,14 +159,14 @@ export default function AccueilClient() {
         </div>
       </section>
 
-      {/* ============ GRILLE PRODUITS ============ */}
+      {/* ============ GRILLE PRODUITS HIVER ============ */}
       <section aria-labelledby="essentiels-titre" className="px-4 pt-[60px] sm:px-11">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className={`eyebrow-mono mb-2 ${content.surTitreClass}`}>{content.surTitre}</p>
+              <p className="eyebrow-mono mb-2 text-heat">UNIVERS HIVER</p>
               <h2 id="essentiels-titre" className="text-[32px] font-bold tracking-[-.025em]">
-                Les essentiels de la saison
+                Les essentiels de l&apos;hiver
               </h2>
             </div>
             <CategoryFilter categories={categories} selected={categorie} onSelect={setCategorie} />
@@ -321,72 +293,49 @@ export default function AccueilClient() {
         </div>
       </section>
 
-      {/* ============ BANDEAU ENTREPRISES ============ */}
-      <section aria-labelledby="entreprises-titre" className="px-4 pt-[60px] sm:px-11">
+      {/* ============ TEASER ÉTÉ ============ */}
+      <section aria-labelledby="teaser-ete-titre" className="px-4 pt-[60px] sm:px-11">
         <Reveal>
-          <div className="flex flex-wrap items-center justify-between gap-8 rounded-lg border border-ink/[.14] px-8 py-10 sm:px-11">
-            <div>
-              <p className="eyebrow-mono mb-2.5 text-ink/50">Entreprises</p>
-              <h2 id="entreprises-titre" className="text-[26px] font-bold tracking-[-.02em]">
-                Équiper une équipe, du devis à la maintenance
-              </h2>
-              <p className="mt-2.5 max-w-[600px] text-[14.5px] leading-[1.55] text-ink/[.58]">
-                Tarifs dégressifs dès 10 pièces, facturation sur compte, marquage employeur
-                et parc d&apos;équipements suivi par l&apos;atelier.
-              </p>
-            </div>
-            <div className="flex flex-none flex-wrap gap-3">
-              <Link
-                href="/entreprises"
-                className="rounded-full bg-ink px-[26px] py-3.5 text-sm font-bold text-white transition-colors hover:bg-ink/85"
-              >
-                Demander un devis
-              </Link>
-              <Link
-                href="/entreprises"
-                className="rounded-full border border-ink/[.28] px-[26px] py-3.5 text-sm font-semibold transition-colors hover:bg-ink/5"
-              >
-                Catalogue B2B
-              </Link>
-            </div>
-          </div>
-        </Reveal>
-      </section>
-
-      {/* ============ DEUX UNIVERS ============ */}
-      <section aria-label="Les deux univers" className="grid gap-5 px-4 pt-[60px] sm:px-11 lg:grid-cols-2">
-        <Reveal>
-          <Link href="/ete" className="group relative block min-h-[240px] overflow-hidden rounded-lg">
+          <Link href="/ete" className="group relative block min-h-[260px] overflow-hidden rounded-lg">
             <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-[1.03]">
               <PlaceholderVisual univers="ete" caption="" />
             </div>
-            <div className="relative flex h-full min-h-[240px] flex-col justify-end p-8 sm:p-10">
-              <p className="eyebrow-mono mb-2.5 text-cool">Été</p>
-              <h3 className="text-[28px] font-bold tracking-[-.02em]">
-                Gilets ventilés, PCM et ventilateurs
-              </h3>
-              <p className="mt-3 max-w-[380px] text-[14.5px] leading-[1.55] text-ink/[.62]">
-                Pour tenir la journée quand la température ne redescend pas.
+            <div className="relative flex h-full min-h-[260px] flex-col justify-end p-8 sm:p-10">
+              <p className="eyebrow-mono mb-2.5 text-cool">Été — bientôt disponible</p>
+              <h2 id="teaser-ete-titre" className="text-[28px] font-bold tracking-[-.02em]">
+                La gamme été se prépare pour les beaux jours
+              </h2>
+              <p className="mt-3 max-w-[460px] text-[14.5px] leading-[1.55] text-ink/[.62]">
+                Gilets ventilés, gilets PCM et ventilateurs de cou : découvrez ce qui arrive
+                et laissez votre e-mail pour être averti·e au lancement.
               </p>
+              <span className="mt-4 text-[13.5px] font-semibold group-hover:underline">
+                Découvrir le teaser été →
+              </span>
             </div>
           </Link>
         </Reveal>
-        <Reveal delay={120}>
-          <Link href="/hiver" className="group relative block min-h-[240px] overflow-hidden rounded-lg">
-            <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-[1.03]">
-              <PlaceholderVisual univers="hiver" caption="" />
-            </div>
-            <div className="relative flex h-full min-h-[240px] flex-col justify-end p-8 sm:p-10">
-              <p className="eyebrow-mono mb-2.5 text-heat">Hiver</p>
-              <h3 className="text-[28px] font-bold tracking-[-.02em]">
-                Vestes, gilets et gants chauffants
-              </h3>
-              <p className="mt-3 max-w-[380px] text-[14.5px] leading-[1.55] text-ink/[.62]">
-                Pour travailler et bouger dehors sans se figer.
-              </p>
-            </div>
-          </Link>
-        </Reveal>
+      </section>
+
+      {/* ============ ACCÈS RAPIDES : SPORT / TRAVAIL EXTÉRIEUR / ENTREPRISES ============ */}
+      <section aria-label="Accès rapides" className="grid gap-[18px] px-4 pt-[60px] sm:px-11 lg:grid-cols-3">
+        {ACCES_RAPIDES.map((carte, i) => (
+          <Reveal key={carte.href} delay={i * 120}>
+            <Link
+              href={carte.href}
+              className="group flex h-full flex-col justify-between rounded-lg border border-ink/[.12] p-7 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(23,24,26,.08)]"
+            >
+              <div>
+                <p className="eyebrow-mono text-ink/50">{carte.eyebrow}</p>
+                <p className="mt-3.5 text-xl font-semibold leading-[1.25]">{carte.title}</p>
+                <p className="mt-2.5 text-[13.5px] leading-[1.55] text-ink/[.58]">{carte.text}</p>
+              </div>
+              <span className="mt-[22px] text-[13.5px] font-semibold group-hover:underline">
+                Voir la sélection →
+              </span>
+            </Link>
+          </Reveal>
+        ))}
       </section>
 
       {/* ============ CAPTURE E-MAIL ============ */}

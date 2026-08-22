@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import CatalogueSection from "@/components/CatalogueSection";
 import Hero from "@/components/Hero";
 import { getProductsByUnivers } from "@/lib/products";
@@ -22,7 +23,11 @@ export default function HiverPage() {
         subtitle="Vestes, gilets et gants chauffants à batterie : restez efficace sur le chantier, performant à l'entraînement et confortable au quotidien, même par -10 °C."
       />
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-        <CatalogueSection univers="hiver" products={products} />
+        {/* Suspense requis : CatalogueSection lit ?cat= via useSearchParams
+            (filtre pré-appliqué depuis le mega-menu Hiver). */}
+        <Suspense>
+          <CatalogueSection univers="hiver" products={products} showAudienceFilter />
+        </Suspense>
       </div>
     </>
   );
